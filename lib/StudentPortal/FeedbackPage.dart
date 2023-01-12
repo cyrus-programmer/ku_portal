@@ -87,7 +87,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 textColor: Colors.white)
           ],
         ),
-      )
+      ),
     ])));
   }
 }

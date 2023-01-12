@@ -14,10 +14,10 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 3.5,
-      height: MediaQuery.of(context).size.height / 14,
+      width: MediaQuery.of(context).size.width / 3.4,
+      height: MediaQuery.of(context).size.height / 14.6,
       decoration: BoxDecoration(
-          color: backgroundColor, borderRadius: BorderRadius.circular(40)),
+          color: backgroundColor, borderRadius: BorderRadius.circular(25)),
       // ignore: prefer_const_constructors
       child: Center(
           // ignore: prefer_const_constructors
@@ -26,7 +26,7 @@ class ButtonWidget extends StatelessWidget {
         // ignore: prefer_const_constructors
         style: TextStyle(
           color: textColor,
-          fontSize: 20,
+          fontSize: 18,
         ),
       )),
     );
