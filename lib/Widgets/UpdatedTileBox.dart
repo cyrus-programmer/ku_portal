@@ -19,16 +19,22 @@ class UpdatedTileBox extends StatefulWidget {
 }
 
 class _UpdatedTileBoxState extends State<UpdatedTileBox> {
-  List ubitDepartments = [
-    "Department of Computer Science",
-    "Food and Science Technology Department",
-    "Applied Physics Department"
-  ];
   ListView listsWidget() {
     return ListView.builder(
-      itemCount: ubitDepartments.length,
+      itemCount: widget.departments.length,
       itemBuilder: (BuildContext context, index) {
-        return ListTile(title: Text(ubitDepartments[index]));
+        return ListTile(
+            title: GestureDetector(
+          onTap: () {
+            print(widget.departments[index]);
+          },
+          child: Text(
+            widget.departments[index],
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                decorationColor: AppConstants.primaryColor),
+          ),
+        ));
       },
     );
   }
