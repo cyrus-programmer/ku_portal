@@ -45,9 +45,12 @@ class _UpdatedTileBoxState extends State<UpdatedTileBox> {
                 colors: [AppConstants.primaryColor, Colors.white]),
             borderRadius: BorderRadius.all(Radius.circular(15)),
             border: Border.all(color: AppConstants.primaryColor)),
-        child: ExpansionTile(
-          title: Text(widget.text),
-          children: <Widget>[listsWidget()],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: ExpansionTile(
+            title: Text(widget.text),
+            children: <Widget>[Container(height: 200, child: listsWidget())],
+          ),
         ),
       ),
     );

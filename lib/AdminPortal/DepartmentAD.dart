@@ -32,7 +32,7 @@ class _DepartmentsADState extends State<DepartmentsAD> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/ubit.jpg'),
+                image: const AssetImage('assets/ubit.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.5), BlendMode.darken)),
@@ -55,9 +55,9 @@ class _DepartmentsADState extends State<DepartmentsAD> {
                   size: 25,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
                   "Departments",
                   style: TextStyle(color: Colors.white, fontSize: 24),
                 ),
@@ -73,14 +73,14 @@ class _DepartmentsADState extends State<DepartmentsAD> {
                             borderSide:
                                 BorderSide(color: AppConstants.primaryColor)),
                         hintText: "Search department",
-                        hintStyle: TextStyle(color: Colors.grey),
+                        hintStyle: const TextStyle(color: Colors.grey),
                         fillColor: Colors.white,
                         filled: true,
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.search,
                           color: Colors.grey,
                         ),
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.filter_list_outlined,
                           color: Colors.grey,
                         ))),
@@ -89,13 +89,43 @@ class _DepartmentsADState extends State<DepartmentsAD> {
           ),
         ),
       ),
-      SizedBox(height: 10),
-      UpdatedTileBox(
-        text: "Science Department",
-        width: double.maxFinite,
-        departments: ubitDepartments,
+      const SizedBox(height: 10),
+      Card(
+        child: UpdatedTileBox(
+          text: "Science Department",
+          width: double.maxFinite,
+          departments: ubitDepartments,
+        ),
       ),
-      SizedBox(height: 10),
+      Card(
+        child: UpdatedTileBox(
+          text: "Arts Department",
+          width: double.maxFinite,
+          departments: ubitDepartments,
+        ),
+      ),
+      Card(
+        child: UpdatedTileBox(
+          text: "Arts Department",
+          width: double.maxFinite,
+          departments: ubitDepartments,
+        ),
+      ),
+      Card(
+        child: UpdatedTileBox(
+          text: "Arts Department",
+          width: double.maxFinite,
+          departments: ubitDepartments,
+        ),
+      ),
+      Card(
+        child: UpdatedTileBox(
+          text: "Arts Department",
+          width: double.maxFinite,
+          departments: ubitDepartments,
+        ),
+      ),
+      const SizedBox(height: 10),
       ButtonWidget(
           backgroundColor: AppConstants.primaryColor,
           text: "Edit Info",
