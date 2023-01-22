@@ -4,8 +4,12 @@ class ButtonWidget extends StatelessWidget {
   final Color backgroundColor;
   final String text;
   final Color textColor;
-  const ButtonWidget(
+  double width;
+  double height;
+  ButtonWidget(
       {Key? key,
+      this.height = 50,
+      this.width = 120,
       required this.backgroundColor,
       required this.text,
       required this.textColor})
@@ -14,8 +18,8 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 3.4,
-      height: MediaQuery.of(context).size.height / 14.6,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
           color: backgroundColor, borderRadius: BorderRadius.circular(25)),
       // ignore: prefer_const_constructors

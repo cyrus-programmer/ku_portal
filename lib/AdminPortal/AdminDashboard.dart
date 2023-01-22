@@ -174,7 +174,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       imagePath: 'assets/ku.png'),
                   UpdatedCarouselItem(
                       page: false,
-                      color: Colors.amber,
+                      color: Colors.blueAccent.shade700,
                       heading: "HEC-Scholarship",
                       subHeading: "Batch-03",
                       imagePath: 'assets/ku.png'),

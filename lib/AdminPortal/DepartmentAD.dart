@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/AdminPortal/AddDepartment.dart';
 import 'package:ku_portal/Widgets/InfoTile.dart';
 import 'package:ku_portal/Widgets/TileBox.dart';
 import 'package:ku_portal/Widgets/UpdatedTileBox.dart';
@@ -99,7 +100,14 @@ class _DepartmentsADState extends State<DepartmentsAD> {
       ),
       Card(
         child: UpdatedTileBox(
-          text: "Arts Department",
+          text: "General Department",
+          width: double.maxFinite,
+          departments: ubitDepartments,
+        ),
+      ),
+      Card(
+        child: UpdatedTileBox(
+          text: "Medical Department",
           width: double.maxFinite,
           departments: ubitDepartments,
         ),
@@ -113,23 +121,30 @@ class _DepartmentsADState extends State<DepartmentsAD> {
       ),
       Card(
         child: UpdatedTileBox(
-          text: "Arts Department",
+          text: "Law Department",
           width: double.maxFinite,
           departments: ubitDepartments,
         ),
       ),
       Card(
         child: UpdatedTileBox(
-          text: "Arts Department",
+          text: "Anonymous Department",
           width: double.maxFinite,
           departments: ubitDepartments,
         ),
       ),
       const SizedBox(height: 10),
-      ButtonWidget(
+      GestureDetector(
+        onTap: (() {
+          AppConstants.nextScreen(context, AddDepartment());
+        }),
+        child: ButtonWidget(
           backgroundColor: AppConstants.primaryColor,
-          text: "Edit Info",
-          textColor: Colors.white),
+          text: "Add New Department",
+          textColor: Colors.white,
+          width: 200,
+        ),
+      ),
     ])));
   }
 }

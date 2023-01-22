@@ -61,7 +61,7 @@ class _ActivityCardState extends State<ActivityCard> {
                       ],
                     ),
                     height: size.height / 6,
-                    width: size.width / 1.21,
+                    width: size.width / 1.25,
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Column(
@@ -74,14 +74,6 @@ class _ActivityCardState extends State<ActivityCard> {
                                 widget.heading,
                                 style: TextStyle(fontSize: 16),
                               ),
-                              Container(
-                                height: 25,
-                                width: 70,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.blue),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Center(child: Text(widget.buttonText)),
-                              )
                             ],
                           ),
                           Text(

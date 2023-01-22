@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/AdminPortal/LoginPageAd.dart';
 import 'package:ku_portal/AdminPortal/NavigatorBarAD.dart';
 import 'package:ku_portal/StudentPortal/LoginPage.dart';
 
@@ -113,10 +114,6 @@ class _SettingADState extends State<SettingAD> {
                 ],
               ),
               const SizedBox(height: 10),
-              const Text(
-                "CMS Update Settings",
-                style: TextStyle(color: Colors.black, fontSize: 20),
-              )
             ],
           ),
         ),
@@ -158,11 +155,6 @@ class _SettingADState extends State<SettingAD> {
                 ],
               ),
               const SizedBox(height: 15),
-              const Text(
-                "Student data record",
-                style: TextStyle(color: Colors.black, fontSize: 20),
-              ),
-              const SizedBox(height: 15),
               Row(
                 children: [
                   const Text(
@@ -185,10 +177,13 @@ class _SettingADState extends State<SettingAD> {
             ],
           ),
         ),
+        SizedBox(
+          height: 10,
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 10.0, top: 20),
           child: Text(
-            "Secondary Settings",
+            "Account Settings",
             style: TextStyle(color: AppConstants.primaryColor, fontSize: 24),
           ),
         ),
@@ -205,18 +200,13 @@ class _SettingADState extends State<SettingAD> {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               const Text(
-                "Admin Profile",
-                style: TextStyle(color: Colors.black, fontSize: 20),
-              ),
-              const SizedBox(height: 15),
-              const Text(
                 "Dev Support",
                 style: TextStyle(color: Colors.black, fontSize: 20),
               ),
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
-                  AppConstants.nextScreenReplace(context, Login());
+                  AppConstants.nextScreenReplace(context, LognAdmin());
                 },
                 child: const Text(
                   "Log Out",

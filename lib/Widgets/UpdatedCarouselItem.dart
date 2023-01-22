@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ku_portal/StudentPortal/ActivitiesPage.dart';
 import 'package:ku_portal/StudentPortal/ScholarshipPage.dart';
 
@@ -48,6 +49,9 @@ class _UpdatedCarouselItemState extends State<UpdatedCarouselItem> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 5,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   // ignore: prefer_const_literals_to_create_immutables
@@ -56,8 +60,8 @@ class _UpdatedCarouselItemState extends State<UpdatedCarouselItem> {
                       widget.heading,
                       style: TextStyle(color: Colors.white),
                     ),
-                    const Icon(
-                      Icons.menu,
+                    FaIcon(
+                      FontAwesomeIcons.ellipsisVertical,
                       color: Colors.white,
                     )
                   ],
@@ -72,7 +76,10 @@ class _UpdatedCarouselItemState extends State<UpdatedCarouselItem> {
                   children: [
                     const Text(
                       "Read More",
-                      style: TextStyle(color: Colors.amber, fontSize: 11),
+                      style: TextStyle(
+                          color: Colors.amber,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 )

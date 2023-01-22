@@ -32,18 +32,18 @@ class _NewsCardState extends State<NewsCard> {
                 fit: BoxFit.fill,
                 colorFilter: ColorFilter.mode(
                     HexColor("#83000A").withRed(255), BlendMode.darken))),
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: FaIcon(
-                    FontAwesomeIcons.ellipsisVertical,
-                    color: Colors.white,
-                  ))
-            ],
-          ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     IconButton(
+          //         onPressed: () {},
+          //         icon: FaIcon(
+          //           FontAwesomeIcons.ellipsisVertical,
+          //           color: Colors.white,
+          //         ))
+          //   ],
+          // ),
           FaIcon(
             widget.icon,
             color: Colors.white,
