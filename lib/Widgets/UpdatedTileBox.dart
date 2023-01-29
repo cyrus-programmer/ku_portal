@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/DefaultScreens/DepartmentScreen.dart';
 
 import '../utils/AppConstants.dart';
 
@@ -26,10 +27,12 @@ class _UpdatedTileBoxState extends State<UpdatedTileBox> {
         return ListTile(
             title: GestureDetector(
           onTap: () {
+            AppConstants.nextScreen(
+                context, DepartmentScreen(data: widget.departments[index]));
             print(widget.departments[index]);
           },
           child: Text(
-            widget.departments[index],
+            widget.departments[index]['name'],
             style: TextStyle(
                 decoration: TextDecoration.underline,
                 decorationColor: AppConstants.primaryColor),

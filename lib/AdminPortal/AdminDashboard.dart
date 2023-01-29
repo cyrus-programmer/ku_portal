@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/AdminControllers/ScholarController.dart';
 import 'package:ku_portal/AdminPortal/AnnouncementPage.dart';
 import 'package:ku_portal/AdminPortal/NavigatorBarAD.dart';
-import 'package:ku_portal/StudentPortal/NavigatorBar.dart';
-import 'package:ku_portal/StudentPortal/NewsPage.dart';
-import 'package:ku_portal/StudentPortal/NotificationPage.dart';
+import 'package:ku_portal/Models/ScholarshipModel.dart';
 import 'package:ku_portal/Widgets/CarouselContainer.dart';
 import 'package:ku_portal/Widgets/UpdatedCarouselItem.dart';
 
+import '../AdminControllers/ActivityController.dart';
+import '../Models/ActivityModel.dart';
 import '../utils/AppConstants.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -19,6 +19,76 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
+  FutureBuilder getAcivities(BuildContext context) {
+    return FutureBuilder<List<ActivityModel>>(
+      future: ActivityController.getActivities(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ActivityModel>> snapshot) {
+        if (snapshot.hasData) {
+          List<ActivityModel>? data = snapshot.data;
+          return cards(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  CarouselSlider cards(data, BuildContext context) {
+    return CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 80,
+          aspectRatio: 16 / 9,
+          viewportFraction: 0.5,
+        ),
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, index, pageView) {
+          return UpdatedCarouselItem(
+            color: AppConstants.primaryColor,
+            heading: data[index].name,
+            imagePath: "assets/ku.png",
+            page: false,
+            subHeading: "Batch-${index + 1}",
+          );
+        });
+  }
+
+  FutureBuilder getScholarhip(BuildContext context) {
+    return FutureBuilder<List<ScholarshipModel>>(
+      future: ScholarController.getScholarships(),
+      builder: (BuildContext context,
+          AsyncSnapshot<List<ScholarshipModel>> snapshot) {
+        if (snapshot.hasData) {
+          List<ScholarshipModel>? data = snapshot.data;
+          return cards1(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  CarouselSlider cards1(data, BuildContext context) {
+    return CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 80,
+          aspectRatio: 16 / 9,
+          viewportFraction: 0.5,
+        ),
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, index, pageView) {
+          return UpdatedCarouselItem(
+            color: AppConstants.primaryColor,
+            heading: data[index].name,
+            imagePath: "assets/ku.png",
+            page: false,
+            subHeading: "Batch-${index + 1}",
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -115,40 +185,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10),
-            child: CarouselSlider(
-                items: [
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-01",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-02",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-03",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-04",
-                      imagePath: 'assets/ku.png'),
-                ],
-                options: CarouselOptions(
-                  height: 80,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.5,
-                )),
-          ),
+              padding: const EdgeInsets.only(left: 10.0, right: 10),
+              child: getScholarhip(context)),
           Padding(
             padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
             child: Text(
@@ -158,38 +196,39 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10),
-            child: CarouselSlider(
-                items: [
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-01",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: Colors.blue,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-02",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: Colors.blueAccent.shade700,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-03",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-04",
-                      imagePath: 'assets/ku.png'),
-                ],
-                options: CarouselOptions(
-                  height: 80,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.5,
-                )),
+            child: getAcivities(context),
+            // child: CarouselSlider(
+            //     items: [
+            //       UpdatedCarouselItem(
+            //           page: false,
+            //           color: AppConstants.primaryColor,
+            //           heading: "HEC-Scholarship",
+            //           subHeading: "Batch-01",
+            //           imagePath: 'assets/ku.png'),
+            //       UpdatedCarouselItem(
+            //           page: false,
+            //           color: Colors.blue,
+            //           heading: "HEC-Scholarship",
+            //           subHeading: "Batch-02",
+            //           imagePath: 'assets/ku.png'),
+            //       UpdatedCarouselItem(
+            //           page: false,
+            //           color: Colors.blueAccent.shade700,
+            //           heading: "HEC-Scholarship",
+            //           subHeading: "Batch-03",
+            //           imagePath: 'assets/ku.png'),
+            //       UpdatedCarouselItem(
+            //           page: false,
+            //           color: AppConstants.primaryColor,
+            //           heading: "HEC-Scholarship",
+            //           subHeading: "Batch-04",
+            //           imagePath: 'assets/ku.png'),
+            //     ],
+            //     options: CarouselOptions(
+            //       height: 80,
+            //       aspectRatio: 16 / 9,
+            //       viewportFraction: 0.5,
+            //     )),
           ),
         ],
       )),

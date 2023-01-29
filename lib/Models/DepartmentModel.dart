@@ -6,10 +6,10 @@ class DepartmentModel {
   String? abbreviation;
   String? description;
   String? parent;
-  List<Child>? child;
+  List<DepartmentModel>? child;
   String? chairmanName;
   List<String>? programs;
-  List<Ancestor>? ancestors;
+  List? ancestors;
   String? createdAt;
   String? updatedAt;
   ByteData? image;
@@ -36,84 +36,20 @@ class DepartmentModel {
     description = json['description'];
     parent = json['parent'];
     if (json['child'] != null) {
-      child = <Child>[];
+      child = <DepartmentModel>[];
       json['child'].forEach((v) {
-        child!.add(new Child.fromJson(v));
+        child!.add(DepartmentModel.fromJson(v));
       });
     }
     chairmanName = json['chairman_name'];
     programs = json['programs'].cast<String>();
     if (json['ancestors'] != null) {
-      ancestors = <Ancestor>[];
+      ancestors = [];
       json['ancestors'].forEach((v) {
-        ancestors!.add(Ancestor.fromJson(v));
+        ancestors!.add(v);
       });
     }
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-  }
-}
-
-class Child {
-  String? sId;
-  String? name;
-  String? abbreviation;
-  String? description;
-  String? parent;
-  List<Child>? child;
-  String? chairmanName;
-  List<String>? programs;
-  List<Ancestor>? ancestors;
-  String? createdAt;
-  String? updatedAt;
-  ByteData? image;
-
-  Child(
-      {this.sId,
-      this.name,
-      this.abbreviation,
-      this.description,
-      this.parent,
-      this.child,
-      this.chairmanName,
-      this.programs,
-      this.ancestors,
-      this.createdAt,
-      this.updatedAt,
-      this.image});
-
-  Child.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    name = json['name'];
-    image = json['image'];
-    abbreviation = json['abbreviation'];
-    description = json['description'];
-    parent = json['parent'];
-    if (json['child'] != null) {
-      child = <Child>[];
-      json['child'].forEach((v) {
-        child!.add(new Child.fromJson(v));
-      });
-    }
-    chairmanName = json['chairman_name'];
-    programs = json['programs'].cast<String>();
-    if (json['ancestors'] != null) {
-      ancestors = <Ancestor>[];
-      json['ancestors'].forEach((v) {
-        ancestors!.add(Ancestor.fromJson(v));
-      });
-    }
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-}
-
-class Ancestor {
-  String? sId;
-
-  Ancestor({this.sId});
-
-  Ancestor.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
   }
 }

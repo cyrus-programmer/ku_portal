@@ -25,17 +25,16 @@ class _DepartmentsADState extends State<DepartmentsAD> {
     "Applied Physics Department"
   ];
   FutureBuilder getScholarship(BuildContext context) {
-    return FutureBuilder<List<DepartmentModel>>(
-      future: DepartmentController.getDepartments(),
-      builder: (BuildContext context,
-          AsyncSnapshot<List<DepartmentModel>> snapshot) {
+    return FutureBuilder<List>(
+      future: DepartmentController.getParents(),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
-          List<DepartmentModel>? data = snapshot.data;
+          List? data = snapshot.data;
           return cards(data, context);
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -44,10 +43,10 @@ class _DepartmentsADState extends State<DepartmentsAD> {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
+          print(data[index]['child']);
           return Card(
             child: UpdatedTileBox(
-              departments: data[index]["child"].map<List<DepartmentModel>>(
-                  (json) => DepartmentModel.fromJson(json)),
+              departments: (data[index]['child']),
               text: data[index]['name'],
               width: double.maxFinite,
             ),
@@ -124,53 +123,53 @@ class _DepartmentsADState extends State<DepartmentsAD> {
         ),
       ),
       const SizedBox(height: 10),
-      getScholarship(context),
-      Card(
-        child: UpdatedTileBox(
-          text: "Science Department",
-          width: double.maxFinite,
-          departments: ubitDepartments,
-        ),
-      ),
-      Card(
-        child: UpdatedTileBox(
-          text: "General Department",
-          width: double.maxFinite,
-          departments: ubitDepartments,
-        ),
-      ),
-      Card(
-        child: UpdatedTileBox(
-          text: "Medical Department",
-          width: double.maxFinite,
-          departments: ubitDepartments,
-        ),
-      ),
-      Card(
-        child: UpdatedTileBox(
-          text: "Arts Department",
-          width: double.maxFinite,
-          departments: ubitDepartments,
-        ),
-      ),
-      Card(
-        child: UpdatedTileBox(
-          text: "Law Department",
-          width: double.maxFinite,
-          departments: ubitDepartments,
-        ),
-      ),
-      Card(
-        child: UpdatedTileBox(
-          text: "Anonymous Department",
-          width: double.maxFinite,
-          departments: ubitDepartments,
-        ),
-      ),
+      SizedBox(height: size.height / 1.8, child: getScholarship(context)),
+      // Card(
+      //   child: UpdatedTileBox(
+      //     text: "Science Department",
+      //     width: double.maxFinite,
+      //     departments: ubitDepartments,
+      //   ),
+      // ),
+      // Card(
+      //   child: UpdatedTileBox(
+      //     text: "General Department",
+      //     width: double.maxFinite,
+      //     departments: ubitDepartments,
+      //   ),
+      // ),
+      // Card(
+      //   child: UpdatedTileBox(
+      //     text: "Medical Department",
+      //     width: double.maxFinite,
+      //     departments: ubitDepartments,
+      //   ),
+      // ),
+      // Card(
+      //   child: UpdatedTileBox(
+      //     text: "Arts Department",
+      //     width: double.maxFinite,
+      //     departments: ubitDepartments,
+      //   ),
+      // ),
+      // Card(
+      //   child: UpdatedTileBox(
+      //     text: "Law Department",
+      //     width: double.maxFinite,
+      //     departments: ubitDepartments,
+      //   ),
+      // ),
+      // Card(
+      //   child: UpdatedTileBox(
+      //     text: "Anonymous Department",
+      //     width: double.maxFinite,
+      //     departments: ubitDepartments,
+      //   ),
+      // ),
       const SizedBox(height: 10),
       GestureDetector(
         onTap: (() {
-          AppConstants.nextScreen(context, AddDepartment());
+          AppConstants.nextScreen(context, const AddDepartment());
         }),
         child: ButtonWidget(
           backgroundColor: AppConstants.primaryColor,

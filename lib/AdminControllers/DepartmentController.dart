@@ -13,6 +13,7 @@ class DepartmentController {
         Uri.parse("http://192.168.10.15:8081/api/categories"),
         body: body,
         headers: headers);
+    print(response.statusCode);
   }
 
   static Future<List<DepartmentModel>> getDepartments() async {
@@ -36,34 +37,25 @@ class DepartmentController {
       "Access-Control-Allow-Origin": "*"
     };
     var response = await http.get(
-        Uri.parse("http://192.168.10.15:8081/api/categories"),
+        Uri.parse("http://192.168.10.15:8081/api/categories/parents"),
         headers: headers);
     var data = json.decode(response.body);
-    List<String> depts = await data.map<String>((json) {
-      if (json['parent'] == null) {
-        return json['name'];
-      }
-    }).toList();
+    List<String> depts =
+        await data.map<String>((json) => json["name"]).toList();
     return depts;
   }
 
-  static Future<List<DepartmentModel>> getParents() async {
+  static Future<List> getParents() async {
     var headers = {
       "Accept": "application/json",
       "Access-Control-Allow-Origin": "*"
     };
     var response = await http.get(
-        Uri.parse("http://192.168.10.15:8081/api/categories"),
+        Uri.parse("http://192.168.10.15:8081/api/categories/parents"),
         headers: headers);
     var data = json.decode(response.body);
-    print(data);
-    List<DepartmentModel> prtDpt = await data.map<DepartmentModel>((json) {
-      if (json['parent'] == null) {
-        print(DepartmentModel.fromJson(json));
-        return DepartmentModel.fromJson(json);
-      }
-    }).toList();
-    print(1);
-    return prtDpt;
+    // List<DepartmentModel> prtDpt = await data
+    // .cast<DepartmentModel>((json) => DepartmentModel.fromJson(json));
+    return data;
   }
 }

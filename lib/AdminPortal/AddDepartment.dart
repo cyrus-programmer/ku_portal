@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ku_portal/AdminControllers/DepartmentController.dart';
 import 'package:ku_portal/Widgets/TextFieldAdminWigt.dart';
 import 'package:ku_portal/Widgets/button.dart';
 
@@ -17,8 +21,11 @@ class AddDepartment extends StatefulWidget {
 
 class _AddDepartmentState extends State<AddDepartment> {
   String filePath = ' ';
+  String? value1;
+  String? prtId;
+  List data = [];
+  List? bigData;
   TextEditingController nameController = TextEditingController();
-  TextEditingController catController = TextEditingController();
   TextEditingController fullFormController = TextEditingController();
   TextEditingController descController = TextEditingController();
   TextEditingController chairManController = TextEditingController();
@@ -29,19 +36,36 @@ class _AddDepartmentState extends State<AddDepartment> {
     programController.clear();
   }
 
+  String? imageBuffer;
   loadFile() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: false);
+    XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      setState(() {
-        filePath = file.path;
-      });
-    } else {
-      print("Not found");
-      // User canceled the picker
+    var bytes = await XFile(file!.path).readAsBytes();
+    setState(() {
+      filePath = file.path;
+      imageBuffer = bytes.toString();
+    });
+
+    // User canceled the picker
+  }
+
+  Future<void> loadData() async {
+    var d = await DepartmentController.getParents();
+    var n = [];
+    for (var element in d) {
+      print(element['name']);
+      n.add(element['name']);
     }
+    setState(() {
+      data = n;
+      bigData = d;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
   }
 
   @override
@@ -107,8 +131,30 @@ class _AddDepartmentState extends State<AddDepartment> {
               lines: 5,
             ),
             const SizedBox(height: 15),
-            TextFieldAdminWigt(
-                controller: catController, text: "Department Category"),
+
+            DropdownButton(
+                value: value1,
+                isExpanded: true,
+                hint: Text("Select Department Category"),
+                items: data.map((name) {
+                  return DropdownMenuItem(
+                    value: name,
+                    child: Text(name),
+                  );
+                }).toList(),
+                onChanged: ((value) {
+                  setState(() {
+                    value1 = value.toString();
+                    for (var element in bigData!) {
+                      if (element['name'] == value1) {
+                        prtId = element['_id'];
+                      }
+                    }
+                  });
+                })),
+            // TextFieldAdminWigt(
+            //     controller: catController, text: "Department Category"),
+
             const SizedBox(height: 15),
             Container(
               height: 60,
@@ -156,10 +202,23 @@ class _AddDepartmentState extends State<AddDepartment> {
               ],
             ),
             const SizedBox(height: 15),
-            ButtonWidget(
-                backgroundColor: AppConstants.primaryColor,
-                text: "Add",
-                textColor: Colors.white)
+            GestureDetector(
+              onTap: () {
+                DepartmentController.addDepartment({
+                  "name": fullFormController.text,
+                  "description": descController.text,
+                  "chairman_name": chairManController.text,
+                  "abbreviation": nameController.text,
+                  "image": "imageBuffer",
+                  "parent": prtId,
+                  "programs": programs.toString()
+                });
+              },
+              child: ButtonWidget(
+                  backgroundColor: AppConstants.primaryColor,
+                  text: "Add",
+                  textColor: Colors.white),
+            )
           ],
         ),
       ),
