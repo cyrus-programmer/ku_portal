@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:ku_portal/AdminPortal/AdminDashboard.dart';
+import 'package:ku_portal/AdminControllers/LoginController.dart';
 import 'package:ku_portal/AdminPortal/SignUpAdmin.dart';
 
-import '../StudentPortal/SignUpPage.dart';
 import '../Widgets/AppBarImage.dart';
 import '../Widgets/LoginTypeText.dart';
 import '../Widgets/button.dart';
@@ -18,15 +17,18 @@ class LognAdmin extends StatefulWidget {
 }
 
 class _LognAdminState extends State<LognAdmin> {
+  TextEditingController _password = TextEditingController();
+  TextEditingController _email = TextEditingController();
+  bool isPasswordHide = true;
+  void toggleChange() {
+    setState(() {
+      isPasswordHide = !isPasswordHide;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isPasswordHide = true;
     var size = MediaQuery.of(context).size;
-    void toggleChange() {
-      setState(() {
-        isPasswordHide = !isPasswordHide;
-      });
-    }
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -59,37 +61,40 @@ class _LognAdminState extends State<LognAdmin> {
           // ignore: prefer_const_constructors
           Padding(
             padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
-            child: const TextField(
-                decoration: InputDecoration(
-              hintText: "Admin ID",
-            )),
+            child: TextField(
+              keyboardType: TextInputType.text,
+              controller: _email,
+              decoration: InputDecoration(
+                hintText: "Admin ID",
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
-                obscureText: isPasswordHide,
-                decoration: InputDecoration(
+              keyboardType: TextInputType.text,
+              controller: _password,
+              decoration: InputDecoration(
                   hintText: "Password",
-                  suffixIcon: IconButton(
-                    icon: FaIcon(isPasswordHide
-                        ? FontAwesomeIcons.eye
-                        : FontAwesomeIcons.eyeSlash),
-                    onPressed: () {
-                      toggleChange();
-                    },
-                  ),
-                )),
+                  suffixIcon: GestureDetector(
+                    onTap: () => toggleChange(),
+                    child: FaIcon(isPasswordHide
+                        ? FontAwesomeIcons.eyeSlash
+                        : FontAwesomeIcons.eye),
+                  )),
+              obscureText: isPasswordHide,
+            ),
           ),
           GestureDetector(
             onTap: () {
-              AppConstants.nextScreenReplace(context, AdminDashboard());
+              LoginController.loginVerify(_email.text, _password.text, context);
             },
             child: ButtonWidget(
                 backgroundColor: AppConstants.primaryColor,
                 text: "Login",
                 textColor: Colors.white),
           ),
-          SizedBox(height: 37),
+          const SizedBox(height: 37),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -99,7 +104,7 @@ class _LognAdminState extends State<LognAdmin> {
               ),
               GestureDetector(
                 onTap: () {
-                  AppConstants.nextScreenReplace(context, SignUpAdmin());
+                  AppConstants.nextScreenReplace(context, const SignUpAdmin());
                 },
                 child: Text(
                   "Sign-Up Now",

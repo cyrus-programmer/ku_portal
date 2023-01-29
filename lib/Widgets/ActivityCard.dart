@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/AppConstants.dart';
 
@@ -9,7 +10,7 @@ class ActivityCard extends StatefulWidget {
   String subHeading;
   String timing;
   String cost;
-  String buttonText;
+  String url;
 
   ActivityCard(
       {Key? key,
@@ -18,7 +19,7 @@ class ActivityCard extends StatefulWidget {
       required this.subHeading,
       required this.cost,
       required this.timing,
-      required this.buttonText})
+      required this.url})
       : super(key: key);
 
   @override
@@ -26,6 +27,15 @@ class ActivityCard extends StatefulWidget {
 }
 
 class _ActivityCardState extends State<ActivityCard> {
+  _launchURLBrowser(String link) async {
+    var url = Uri.parse(link);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -126,10 +136,15 @@ class _ActivityCardState extends State<ActivityCard> {
                                   )
                                 ],
                               ),
-                              Text(
-                                "Read More",
-                                style:
-                                    TextStyle(color: AppConstants.primaryColor),
+                              GestureDetector(
+                                onTap: () {
+                                  _launchURLBrowser(widget.url);
+                                },
+                                child: Text(
+                                  "Read More",
+                                  style: TextStyle(
+                                      color: AppConstants.primaryColor),
+                                ),
                               )
                             ],
                           )

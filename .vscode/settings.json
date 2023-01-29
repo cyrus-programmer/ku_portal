@@ -1,4 +1,7 @@
 {
     "cmake.sourceDirectory": "${workspaceFolder}/linux/flutter",
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "cSpell.words": [
+        "depts"
+    ]
 }

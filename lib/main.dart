@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ku_portal/DefaultScreens/Splash.dart';
-import 'package:ku_portal/StudentPortal/ActivitiesPage.dart';
-import 'package:ku_portal/StudentPortal/NotificationPage.dart';
-import 'package:ku_portal/StudentPortal/ScholarshipPage.dart';
-import 'package:ku_portal/StudentPortal/StudentDashBoard.dart';
-import 'package:ku_portal/utils/AppConstants.dart';
 
 void main() {
   runApp(const MyApp());

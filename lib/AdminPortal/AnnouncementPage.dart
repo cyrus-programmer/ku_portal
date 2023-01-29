@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/AdminControllers/ActivityController.dart';
 import 'package:ku_portal/Widgets/TextFieldAdminWigt.dart';
 import 'package:ku_portal/Widgets/button.dart';
 
+import '../AdminControllers/ScholarController.dart';
 import '../Widgets/ActivityCard.dart';
 import '../utils/AppConstants.dart';
 
@@ -141,7 +143,15 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                               controller: urlController, text: "Post URL"),
                           SizedBox(height: 20),
                           GestureDetector(
-                            onTap: (() {}),
+                            onTap: (() {
+                              ScholarController.addScholarship({
+                                "name": nameController.text,
+                                "department": "63d4d39626404f95376b08e0",
+                                "charges": int.parse(chargesController.text),
+                                "semester": semController.text,
+                                "url": urlController.text
+                              });
+                            }),
                             child: ButtonWidget(
                                 width: 160,
                                 backgroundColor: AppConstants.primaryColor,
@@ -184,7 +194,15 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                               controller: urlController, text: "Post URL"),
                           SizedBox(height: 20),
                           GestureDetector(
-                            onTap: (() {}),
+                            onTap: (() {
+                              ActivityController.addScholarship({
+                                "name": nameController.text,
+                                "department": "63d4d39626404f95376b08e0",
+                                "charges": int.parse(chargesController.text),
+                                "timing": semController.text,
+                                "url": urlController.text
+                              });
+                            }),
                             child: ButtonWidget(
                                 width: 160,
                                 backgroundColor: AppConstants.primaryColor,

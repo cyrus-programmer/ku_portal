@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/AdminControllers/DepartmentController.dart';
 import 'package:ku_portal/AdminPortal/AddDepartment.dart';
+import 'package:ku_portal/Models/DepartmentModel.dart';
 import 'package:ku_portal/Widgets/InfoTile.dart';
 import 'package:ku_portal/Widgets/TileBox.dart';
 import 'package:ku_portal/Widgets/UpdatedTileBox.dart';
@@ -22,6 +24,37 @@ class _DepartmentsADState extends State<DepartmentsAD> {
     "Food and Science Technology Department",
     "Applied Physics Department"
   ];
+  FutureBuilder getScholarship(BuildContext context) {
+    return FutureBuilder<List<DepartmentModel>>(
+      future: DepartmentController.getDepartments(),
+      builder: (BuildContext context,
+          AsyncSnapshot<List<DepartmentModel>> snapshot) {
+        if (snapshot.hasData) {
+          List<DepartmentModel>? data = snapshot.data;
+          return cards(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  ListView cards(data, BuildContext context) {
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: UpdatedTileBox(
+              departments: data[index]["child"].map<List<DepartmentModel>>(
+                  (json) => DepartmentModel.fromJson(json)),
+              text: data[index]['name'],
+              width: double.maxFinite,
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -91,6 +124,7 @@ class _DepartmentsADState extends State<DepartmentsAD> {
         ),
       ),
       const SizedBox(height: 10),
+      getScholarship(context),
       Card(
         child: UpdatedTileBox(
           text: "Science Department",
