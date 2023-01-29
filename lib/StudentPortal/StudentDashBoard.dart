@@ -7,6 +7,10 @@ import 'package:ku_portal/StudentPortal/NotificationPage.dart';
 import 'package:ku_portal/Widgets/CarouselContainer.dart';
 import 'package:ku_portal/Widgets/UpdatedCarouselItem.dart';
 
+import '../AdminControllers/ActivityController.dart';
+import '../AdminControllers/ScholarController.dart';
+import '../Models/ActivityModel.dart';
+import '../Models/ScholarshipModel.dart';
 import '../utils/AppConstants.dart';
 
 class StdDashBoard extends StatefulWidget {
@@ -17,13 +21,81 @@ class StdDashBoard extends StatefulWidget {
 }
 
 class _StdDashBoardState extends State<StdDashBoard> {
+  FutureBuilder getAcivities(BuildContext context) {
+    return FutureBuilder<List<ActivityModel>>(
+      future: ActivityController.getActivities(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ActivityModel>> snapshot) {
+        if (snapshot.hasData) {
+          List<ActivityModel>? data = snapshot.data;
+          return cards(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  CarouselSlider cards(data, BuildContext context) {
+    return CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 80,
+          aspectRatio: 16 / 9,
+          viewportFraction: 0.5,
+        ),
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, index, pageView) {
+          return UpdatedCarouselItem(
+            color: AppConstants.primaryColor,
+            heading: data[index].name,
+            imagePath: "assets/ku.png",
+            page: false,
+            subHeading: "Batch-${index + 1}",
+          );
+        });
+  }
+
+  FutureBuilder getScholarhip(BuildContext context) {
+    return FutureBuilder<List<ScholarshipModel>>(
+      future: ScholarController.getScholarships(),
+      builder: (BuildContext context,
+          AsyncSnapshot<List<ScholarshipModel>> snapshot) {
+        if (snapshot.hasData) {
+          List<ScholarshipModel>? data = snapshot.data;
+          return cards1(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  CarouselSlider cards1(data, BuildContext context) {
+    return CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 80,
+          aspectRatio: 16 / 9,
+          viewportFraction: 0.5,
+        ),
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, index, pageView) {
+          return UpdatedCarouselItem(
+            color: AppConstants.primaryColor,
+            heading: data[index].name,
+            imagePath: "assets/ku.png",
+            page: false,
+            subHeading: "Batch-${index + 1}",
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
         children: [
           Container(
             height: size.height / 3.5,
@@ -98,116 +170,66 @@ class _StdDashBoardState extends State<StdDashBoard> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20, bottom: 10),
-            child: Text(
-              "Departments",
-              style: TextStyle(color: AppConstants.primaryColor, fontSize: 24),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10),
-            child: CarouselSlider(
-                items: [
-                  CarouselItem(
-                      department: 'DCS-UBIT', imagePath: 'assets/ubit.jpg'),
-                  CarouselItem(
-                      department: 'Mass-Com', imagePath: 'assets/mascom.png'),
-                  CarouselItem(
-                      department: 'Dept-DPA', imagePath: 'assets/dpa.jpg'),
-                ],
-                options: CarouselOptions(
-                  height: 80,
-                  aspectRatio: 4 / 4,
-                  viewportFraction: 0.4,
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
-            child: Text(
-              "Scholarships",
-              style: TextStyle(color: AppConstants.primaryColor, fontSize: 24),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10),
-            child: CarouselSlider(
-                items: [
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-01",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-02",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-03",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: true,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-04",
-                      imagePath: 'assets/ku.png'),
-                ],
-                options: CarouselOptions(
-                  height: 80,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.5,
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
-            child: Text(
-              "Activities",
-              style: TextStyle(color: AppConstants.primaryColor, fontSize: 24),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10),
-            child: CarouselSlider(
-                items: [
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-01",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: Colors.blue,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-02",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: Colors.amber,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-03",
-                      imagePath: 'assets/ku.png'),
-                  UpdatedCarouselItem(
-                      page: false,
-                      color: AppConstants.primaryColor,
-                      heading: "HEC-Scholarship",
-                      subHeading: "Batch-04",
-                      imagePath: 'assets/ku.png'),
-                ],
-                options: CarouselOptions(
-                  height: 80,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.5,
-                )),
+          Expanded(
+            child: SingleChildScrollView(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 20, bottom: 10),
+                  child: Text(
+                    "Departments",
+                    style: TextStyle(
+                        color: AppConstants.primaryColor, fontSize: 24),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10),
+                  child: CarouselSlider(
+                      items: [
+                        CarouselItem(
+                            department: 'DCS-UBIT',
+                            imagePath: 'assets/ubit.jpg'),
+                        CarouselItem(
+                            department: 'Mass-Com',
+                            imagePath: 'assets/mascom.png'),
+                        CarouselItem(
+                            department: 'Dept-DPA',
+                            imagePath: 'assets/dpa.jpg'),
+                      ],
+                      options: CarouselOptions(
+                        height: 80,
+                        aspectRatio: 4 / 4,
+                        viewportFraction: 0.4,
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                  child: Text(
+                    "Scholarships",
+                    style: TextStyle(
+                        color: AppConstants.primaryColor, fontSize: 24),
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10),
+                    child: getScholarhip(context)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                  child: Text(
+                    "Activities",
+                    style: TextStyle(
+                        color: AppConstants.primaryColor, fontSize: 24),
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10),
+                    child: getAcivities(context)),
+              ],
+            )),
           ),
         ],
-      )),
+      ),
       bottomNavigationBar: NavigatorBottomAppBar(
         page: "Home",
       ),

@@ -4,6 +4,9 @@ import 'package:ku_portal/Widgets/ActivityCard.dart';
 import 'package:ku_portal/Widgets/button.dart';
 import 'package:ku_portal/utils/AppConstants.dart';
 
+import '../AdminControllers/ActivityController.dart';
+import '../Models/ActivityModel.dart';
+
 class ActivitiesPage extends StatefulWidget {
   const ActivitiesPage({Key? key}) : super(key: key);
 
@@ -12,75 +15,83 @@ class ActivitiesPage extends StatefulWidget {
 }
 
 class _ActivitiesPageState extends State<ActivitiesPage> {
+  FutureBuilder getAcivities(BuildContext context) {
+    return FutureBuilder<List<ActivityModel>>(
+      future: ActivityController.getActivities(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ActivityModel>> snapshot) {
+        if (snapshot.hasData) {
+          List<ActivityModel>? data = snapshot.data;
+          return cards(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  ListView cards(data, BuildContext context) {
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return ActivityCard(
+              activity: "Activity " + (index + 1).toString(),
+              heading: data[index].name,
+              subHeading: data[index].dept,
+              cost: data[index].charges.toString(),
+              timing: data[index].sem,
+              url: data[index].url);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: size.height / 10,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: const AssetImage('assets/ku.png'),
-                      fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                          AppConstants.primaryColor.withOpacity(0.8),
-                          BlendMode.darken))),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        AppConstants.backScreenReplace(context);
-                      },
-                      icon: const FaIcon(
-                        FontAwesomeIcons.circleLeft,
-                        color: Colors.white,
-                        size: 25,
-                      ),
+      body: Column(
+        children: [
+          Container(
+            height: size.height / 10,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: const AssetImage('assets/ku.png'),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                        AppConstants.primaryColor.withOpacity(0.8),
+                        BlendMode.darken))),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      AppConstants.backScreenReplace(context);
+                    },
+                    icon: const FaIcon(
+                      FontAwesomeIcons.circleLeft,
+                      color: Colors.white,
+                      size: 25,
                     ),
-                    const Text(
-                      "Activities",
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    )
-                  ],
-                ),
+                  ),
+                  const Text(
+                    "Activities",
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  )
+                ],
               ),
             ),
-            ActivityCard(
-                url: "Ticket",
-                activity: "Activity 01",
-                heading: "KU-Mega Book fair",
-                subHeading: "For all departments",
-                cost: "Free",
-                timing: "10:00-11:00"),
-            ActivityCard(
-                url: "Ticket",
-                activity: "Activity 02",
-                heading: "KU-Sports Gala",
-                subHeading: "For all departments",
-                cost: "Depends on module",
-                timing: "10:00 - 7:00"),
-            ActivityCard(
-                url: "Ticket",
-                activity: "Activity 03",
-                heading: "Annual Dinner",
-                subHeading: "For DCS-UBIT students",
-                cost: "Depends upon category",
-                timing: "7:30 - 11:30"),
-            ActivityCard(
-                url: "Ticket",
-                activity: "Activity 01",
-                heading: "KU-Mega Book fair",
-                subHeading: "For all departments",
-                cost: "Free",
-                timing: "10:00-11:00"),
-          ],
-        ),
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                    height: size.height / 1.2, child: getAcivities(context))
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../AdminControllers/ScholarController.dart';
+import '../Models/ScholarshipModel.dart';
 import '../Widgets/ActivityCard.dart';
 import '../utils/AppConstants.dart';
 
@@ -12,76 +14,85 @@ class ScholarshipPage extends StatefulWidget {
 }
 
 class _ScholarshipPageState extends State<ScholarshipPage> {
+  FutureBuilder getScholarship(BuildContext context) {
+    return FutureBuilder<List<ScholarshipModel>>(
+      future: ScholarController.getScholarships(),
+      builder: (BuildContext context,
+          AsyncSnapshot<List<ScholarshipModel>> snapshot) {
+        if (snapshot.hasData) {
+          List<ScholarshipModel>? data = snapshot.data;
+          return cards1(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  ListView cards1(data, BuildContext context) {
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return ActivityCard(
+              activity: "Scholarship " + (index + 1).toString(),
+              heading: data[index].name.toString(),
+              subHeading: data[index].department.toString(),
+              cost: data[index].charges.toString(),
+              timing: data[index].semester.toString(),
+              url: data[index].url);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: size.height / 10,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: const AssetImage('assets/ku.png'),
-                      fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                          AppConstants.primaryColor.withOpacity(0.8),
-                          BlendMode.darken))),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        AppConstants.backScreenReplace(context);
-                      },
-                      icon: const FaIcon(
-                        FontAwesomeIcons.circleLeft,
-                        color: Colors.white,
-                        size: 25,
-                      ),
+      body: Column(
+        children: [
+          Container(
+            height: size.height / 10,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: const AssetImage('assets/ku.png'),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                        AppConstants.primaryColor.withOpacity(0.8),
+                        BlendMode.darken))),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      AppConstants.backScreenReplace(context);
+                    },
+                    icon: const FaIcon(
+                      FontAwesomeIcons.circleLeft,
+                      color: Colors.white,
+                      size: 25,
                     ),
-                    const Text(
-                      "Scholarships",
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    )
-                  ],
-                ),
+                  ),
+                  const Text(
+                    "Scholarships",
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  )
+                ],
               ),
             ),
-            ActivityCard(
-                url: "Apply",
-                activity: "Scholarship 01",
-                heading: "HEC-Scholarship Phase-I",
-                subHeading: "Science Departments",
-                cost: "05 K",
-                timing: "8 Semesters"),
-            ActivityCard(
-                url: "Apply",
-                activity: "Scholarship 02",
-                heading: "PIAIC-Scholarship Phase-I",
-                subHeading: "Science Departments",
-                cost: "02 K",
-                timing: "4 Semesters"),
-            ActivityCard(
-                url: "Apply",
-                activity: "Scholarship 03",
-                heading: "HEC-Scholarship Phase-II",
-                subHeading: "For DCS-UBIT students",
-                cost: "Depends upon category",
-                timing: "7:30 - 11:30"),
-            ActivityCard(
-              activity: "Scholarship 04",
-              heading: "PIAIC-Scholarship Phase-II",
-              subHeading: "For all departments",
-              cost: "Free",
-              timing: "10:00-11:00",
-              url: "Apply",
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: size.height / 1.2,
+                  child: getScholarship(context),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
