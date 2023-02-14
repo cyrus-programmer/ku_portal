@@ -8,7 +8,9 @@ import 'package:ku_portal/Widgets/CarouselContainer.dart';
 import 'package:ku_portal/Widgets/UpdatedCarouselItem.dart';
 
 import '../AdminControllers/ActivityController.dart';
+import '../AdminControllers/DepartmentController.dart';
 import '../AdminControllers/ScholarController.dart';
+import '../DefaultScreens/DepartmentScreen.dart';
 import '../Models/ActivityModel.dart';
 import '../Models/ScholarshipModel.dart';
 import '../utils/AppConstants.dart';
@@ -87,6 +89,42 @@ class _StdDashBoardState extends State<StdDashBoard> {
             imagePath: "assets/ku.png",
             page: false,
             subHeading: "Batch-${index + 1}",
+          );
+        });
+  }
+
+  FutureBuilder getDepartments(BuildContext context) {
+    return FutureBuilder<List>(
+      future: DepartmentController.getChildDepartments(),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          List? data = snapshot.data;
+          return cards2(data!, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
+  CarouselSlider cards2(List data, BuildContext context) {
+    return CarouselSlider.builder(
+        options: CarouselOptions(
+          height: 80,
+          aspectRatio: 4 / 4,
+          viewportFraction: 0.4,
+        ),
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, index, pageView) {
+          return GestureDetector(
+            onTap: () {
+              AppConstants.nextScreen(
+                  context, DepartmentScreen(data: data[index]));
+            },
+            child: CarouselItem(
+                department: data[index]['abbreviation'],
+                imagePath: data[index]['image']),
           );
         });
   }
@@ -192,25 +230,8 @@ class _StdDashBoardState extends State<StdDashBoard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10.0, right: 10),
-                  child: CarouselSlider(
-                      items: [
-                        CarouselItem(
-                            department: 'DCS-UBIT',
-                            imagePath: 'assets/ubit.jpg'),
-                        CarouselItem(
-                            department: 'Mass-Com',
-                            imagePath: 'assets/mascom.png'),
-                        CarouselItem(
-                            department: 'Dept-DPA',
-                            imagePath: 'assets/dpa.jpg'),
-                      ],
-                      options: CarouselOptions(
-                        height: 80,
-                        aspectRatio: 4 / 4,
-                        viewportFraction: 0.4,
-                      )),
-                ),
+                    padding: const EdgeInsets.only(left: 10.0, right: 10),
+                    child: getDepartments(context)),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, top: 20, bottom: 20),
                   child: Text(

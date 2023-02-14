@@ -15,7 +15,7 @@ class DepartmentsPage extends StatefulWidget {
 class _DepartmentsPageState extends State<DepartmentsPage> {
   FutureBuilder getScholarship(BuildContext context) {
     return FutureBuilder<List>(
-      future: DepartmentController.getDepartments(),
+      future: DepartmentController.getParents(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
         if (snapshot.hasData) {
           List? data = snapshot.data;
@@ -34,7 +34,9 @@ class _DepartmentsPageState extends State<DepartmentsPage> {
         itemBuilder: (context, index) {
           return Card(
             child: UpdatedTileBox(
-              departments: (data[index]['child']),
+              departments: ((data[index]['child'] as List)
+                  .map((item) => item as String)
+                  .toList()),
               text: data[index]['name'],
               width: double.maxFinite,
             ),

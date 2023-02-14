@@ -10,6 +10,7 @@ import '../Auth.dart';
 
 class DepartmentController {
   static Future addDepartment(Map<String, dynamic> body) async {
+    print(body['programs']);
     var headers = {
       "authorization": "Bearer ${AuthData.token}",
       "Accept": "application/json",
@@ -50,7 +51,6 @@ class DepartmentController {
     var response = await http.get(
         Uri.parse("http://${AppConstants.ipAddress}:8081/api/categories"),
         headers: headers);
-    print(response.statusCode);
     var data = json.decode(response.body);
 
     return data["categories"];
@@ -65,7 +65,6 @@ class DepartmentController {
     var response = await http.get(
         Uri.parse("http://${AppConstants.ipAddress}:8081/api/categories"),
         headers: headers);
-    print(response.body);
     var data = json.decode(response.body);
     // List<String> depts =
     //     await data.map<String>((json) => json["name"]).toList();
@@ -109,5 +108,18 @@ class DepartmentController {
     }
 
     return dpts;
+  }
+
+  static Future<List> getChildDepartments() async {
+    var headers = {
+      "authorization": "Bearer ${AuthData.token}",
+      "Accept": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    };
+    var response = await http.get(
+        Uri.parse("http://${AppConstants.ipAddress}:8081/api/categories/child"),
+        headers: headers);
+    var data = json.decode(response.body);
+    return data;
   }
 }

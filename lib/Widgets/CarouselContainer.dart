@@ -19,7 +19,7 @@ class _CarouselItemState extends State<CarouselItem> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-                image: AssetImage(widget.imagePath), fit: BoxFit.fill)),
+                image: NetworkImage(widget.imagePath), fit: BoxFit.fill)),
         child: Padding(
           padding: const EdgeInsets.only(left: 10, bottom: 5),
           child: Column(
@@ -28,7 +28,7 @@ class _CarouselItemState extends State<CarouselItem> {
               Expanded(child: Container()),
               Text(
                 widget.department,
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),
