@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ku_portal/AdminControllers/DepartmentController.dart';
 import 'package:ku_portal/AdminPortal/AddDepartment.dart';
-import 'package:ku_portal/Models/DepartmentModel.dart';
-import 'package:ku_portal/Widgets/InfoTile.dart';
-import 'package:ku_portal/Widgets/TileBox.dart';
 import 'package:ku_portal/Widgets/UpdatedTileBox.dart';
 import 'package:ku_portal/Widgets/button.dart';
 
-import '../Widgets/AppBarImage.dart';
 import '../utils/AppConstants.dart';
 
 class DepartmentsAD extends StatefulWidget {
@@ -19,11 +15,6 @@ class DepartmentsAD extends StatefulWidget {
 }
 
 class _DepartmentsADState extends State<DepartmentsAD> {
-  List ubitDepartments = [
-    "Department of Computer Science",
-    "Food and Science Technology Department",
-    "Applied Physics Department"
-  ];
   FutureBuilder getScholarship(BuildContext context) {
     return FutureBuilder<List>(
       future: DepartmentController.getParents(),
@@ -43,10 +34,11 @@ class _DepartmentsADState extends State<DepartmentsAD> {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          print(data[index]['child']);
           return Card(
             child: UpdatedTileBox(
-              departments: (data[index]['child']),
+              departments: ((data[index]['child'] as List)
+                  .map((item) => item as String)
+                  .toList()),
               text: data[index]['name'],
               width: double.maxFinite,
             ),

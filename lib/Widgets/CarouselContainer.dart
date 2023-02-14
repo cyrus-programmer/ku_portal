@@ -28,7 +28,7 @@ class _CarouselItemState extends State<CarouselItem> {
               Expanded(child: Container()),
               Text(
                 widget.department,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/Models/DepartmentModel.dart';
 
 import '../utils/AppConstants.dart';
 
@@ -16,6 +17,7 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    print(widget.data!['image']);
     return Scaffold(
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,10 +27,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: MemoryImage(
-                      Uint8List.fromList(
-                          widget.data!["image"]['data'].cast<int>()),
-                      scale: 1),
+                  image:
+                      NetworkImage(widget.data!['image'].replaceAll('"', '')),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.5), BlendMode.darken)),
@@ -53,17 +53,17 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
                 ),
                 Expanded(child: Container()),
                 Padding(
-                  padding: EdgeInsets.only(left: 8.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     "${widget.data!['abbreviation']}",
-                    style: TextStyle(color: Colors.white, fontSize: 24),
+                    style: const TextStyle(color: Colors.white, fontSize: 24),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 8.0, bottom: 10),
+                  padding: const EdgeInsets.only(left: 8.0, bottom: 10),
                   child: Text(
                     "${widget.data!['name']}",
-                    style: TextStyle(color: Colors.white, fontSize: 12),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               ],
@@ -82,10 +82,10 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Text(
               "${widget.data!['description']}",
-              style: TextStyle(color: Colors.black, fontSize: 16),
+              style: const TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
           Padding(
@@ -96,10 +96,10 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: Text(
               "${widget.data!['chairman_name']}",
-              style: TextStyle(color: Colors.black, fontSize: 16),
+              style: const TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
           Padding(
@@ -111,8 +111,8 @@ class _DepartmentScreenState extends State<DepartmentScreen> {
           ),
           ListView(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: widget.data!['programs']
+            physics: const NeverScrollableScrollPhysics(),
+            children: widget.data!['programs'][0]
                 .map<Widget>((e) => Text(
                       "\u2022 $e",
                       style: TextStyle(

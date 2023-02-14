@@ -10,9 +10,7 @@ class DepartmentModel {
   String? chairmanName;
   List<String>? programs;
   List? ancestors;
-  String? createdAt;
-  String? updatedAt;
-  ByteData? image;
+  String? image;
 
   DepartmentModel(
       {this.sId,
@@ -24,13 +22,11 @@ class DepartmentModel {
       this.chairmanName,
       this.programs,
       this.ancestors,
-      this.createdAt,
-      this.updatedAt,
       this.image});
 
   DepartmentModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    image = json[image];
+    image = json["image"];
     name = json['name'];
     abbreviation = json['abbreviation'];
     description = json['description'];
@@ -49,7 +45,14 @@ class DepartmentModel {
         ancestors!.add(v);
       });
     }
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
+}
+
+class ProgramWrapper {
+  List<String>? programs;
+  set taskModelList(List<String> taskModelList) {
+    programs = taskModelList;
+  }
+
+  get program => programs;
 }

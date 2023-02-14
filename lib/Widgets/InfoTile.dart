@@ -23,7 +23,7 @@ class _InfoTileState extends State<InfoTile> {
         padding: const EdgeInsets.only(top: 15.0, left: 15),
         child: Text(
           widget.text,
-          style: TextStyle(color: Colors.grey, fontSize: 18),
+          style: const TextStyle(color: Colors.grey, fontSize: 18),
         ),
       ),
     );

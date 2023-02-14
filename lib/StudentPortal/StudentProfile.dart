@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/Auth.dart';
 import 'package:ku_portal/StudentPortal/NavigatorBar.dart';
 import 'package:ku_portal/Widgets/InfoTile.dart';
 import 'package:ku_portal/Widgets/TileBox.dart';
 
 import '../utils/AppConstants.dart';
-import 'NotificationPage.dart';
 
 class StudentProfile extends StatefulWidget {
   const StudentProfile({Key? key}) : super(key: key);
@@ -87,14 +87,14 @@ class _StudentProfileState extends State<StudentProfile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "XYZ",
+                              "${AuthData.user!.firstName} ${AuthData.user!.lastName}",
                               style: TextStyle(
                                 color: Colors.grey.shade300,
                                 fontSize: 20,
                               ),
                             ),
-                            const Text(
-                              "En1000000",
+                            Text(
+                              "${AuthData.user!.seatNumber}",
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 12),
                             )
@@ -124,7 +124,6 @@ class _StudentProfileState extends State<StudentProfile> {
                       borderRadius: BorderRadius.circular(20)),
                   height: 60,
                   width: size.width / 2.5,
-                  // ignore: prefer_const_constructors
                   child: Center(
                     child: const Text(
                       "My Activity",
@@ -171,36 +170,37 @@ class _StudentProfileState extends State<StudentProfile> {
           Padding(
               padding: const EdgeInsets.only(top: 10.0, left: 15, right: 15),
               child: isGeneral
-                  ? Container(
-                      child: Column(
-                        children: [
-                          InfoTile(text: "Years:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "Email address:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "Batch:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "Status:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "Gender:"),
-                        ],
-                      ),
-                    )
-                  : Container(
-                      child: Column(
-                        children: [
-                          InfoTile(text: "CNIC:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "Email address:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "Permanent address:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "City:"),
-                          const SizedBox(height: 15),
-                          InfoTile(text: "Phone Number:"),
-                        ],
-                      ),
-                    ))
+                  ? Column(
+                    children: [
+                      InfoTile(text: "Years:"),
+                      const SizedBox(height: 15),
+                      InfoTile(
+                          text: "Email address: ${AuthData.user!.email}"),
+                      const SizedBox(height: 15),
+                      InfoTile(text: "Batch:"),
+                      const SizedBox(height: 15),
+                      InfoTile(
+                          text:
+                              "Status: ${AuthData.user!.isPassOut! ? 'Alumni' : 'Student'}"),
+                      const SizedBox(height: 15),
+                      InfoTile(text: "Gender:"),
+                    ],
+                  )
+                  : Column(
+                    children: [
+                      InfoTile(text: "CNIC:"),
+                      const SizedBox(height: 15),
+                      InfoTile(
+                          text: "Email address: ${AuthData.user!.email}"),
+                      const SizedBox(height: 15),
+                      InfoTile(text: "Permanent address:"),
+                      const SizedBox(height: 15),
+                      InfoTile(text: "City:"),
+                      const SizedBox(height: 15),
+                      InfoTile(
+                          text: "Phone Number: ${AuthData.user!.phone}"),
+                    ],
+                  ))
         ])),
         bottomNavigationBar: NavigatorBottomAppBar(
           page: 'Profile',

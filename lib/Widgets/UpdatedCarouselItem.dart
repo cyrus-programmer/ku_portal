@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ku_portal/StudentPortal/ActivitiesPage.dart';
 import 'package:ku_portal/StudentPortal/ScholarshipPage.dart';
@@ -31,7 +30,7 @@ class _UpdatedCarouselItemState extends State<UpdatedCarouselItem> {
     return GestureDetector(
       onTap: () {
         AppConstants.nextScreen(
-            context, widget.page ? ScholarshipPage() : ActivitiesPage());
+            context, widget.page ? const ScholarshipPage() : const ActivitiesPage());
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
@@ -49,7 +48,7 @@ class _UpdatedCarouselItemState extends State<UpdatedCarouselItem> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
@@ -58,9 +57,9 @@ class _UpdatedCarouselItemState extends State<UpdatedCarouselItem> {
                   children: [
                     Text(
                       widget.heading,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
-                    FaIcon(
+                    const FaIcon(
                       FontAwesomeIcons.ellipsisVertical,
                       color: Colors.white,
                     )
@@ -68,13 +67,13 @@ class _UpdatedCarouselItemState extends State<UpdatedCarouselItem> {
                 ),
                 Text(
                   widget.subHeading,
-                  style: TextStyle(color: Colors.white, fontSize: 11),
+                  style: const TextStyle(color: Colors.white, fontSize: 11),
                 ),
                 Expanded(child: Container()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       "Read More",
                       style: TextStyle(
                           color: Colors.amber,

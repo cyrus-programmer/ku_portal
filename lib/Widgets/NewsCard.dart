@@ -51,7 +51,7 @@ class _NewsCardState extends State<NewsCard> {
           ),
           Text(
             widget.heading,
-            style: TextStyle(color: Colors.white, fontSize: 24),
+            style: const TextStyle(color: Colors.white, fontSize: 24),
           ),
           Text(
             widget.subHeading,

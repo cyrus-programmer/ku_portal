@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ku_portal/AdminPortal/LoginPageAd.dart';
 import 'package:ku_portal/AdminPortal/NavigatorBarAD.dart';
-import 'package:ku_portal/StudentPortal/LoginPage.dart';
 
 import '../utils/AppConstants.dart';
 import 'AnnouncementPage.dart';
@@ -177,7 +176,7 @@ class _SettingADState extends State<SettingAD> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Padding(
@@ -206,7 +205,7 @@ class _SettingADState extends State<SettingAD> {
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
-                  AppConstants.nextScreenReplace(context, LognAdmin());
+                  AppConstants.nextScreenReplace(context, const LognAdmin());
                 },
                 child: const Text(
                   "Log Out",
@@ -218,7 +217,7 @@ class _SettingADState extends State<SettingAD> {
         ),
       ])),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         height: 50,
         width: 50,
         child: Material(
@@ -232,7 +231,7 @@ class _SettingADState extends State<SettingAD> {
             child: InkWell(
               borderRadius: BorderRadius.circular(500.0),
               onTap: () {
-                AppConstants.nextScreen(context, AddAnnouncement());
+                AppConstants.nextScreen(context, const AddAnnouncement());
               },
               child: Icon(
                 Icons.add,

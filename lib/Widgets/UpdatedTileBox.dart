@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/AdminControllers/DepartmentController.dart';
 import 'package:ku_portal/DefaultScreens/DepartmentScreen.dart';
+import 'package:ku_portal/Models/DepartmentModel.dart';
 
 import '../utils/AppConstants.dart';
 
 class UpdatedTileBox extends StatefulWidget {
   String text;
   double width;
-  List departments;
+  List<String> departments;
   UpdatedTileBox(
       {Key? key,
       required this.text,
@@ -20,19 +21,34 @@ class UpdatedTileBox extends StatefulWidget {
 }
 
 class _UpdatedTileBoxState extends State<UpdatedTileBox> {
-  ListView listsWidget() {
+  FutureBuilder getDepartents(BuildContext context) {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: DepartmentController.getDepartment(widget.departments),
+      builder: (BuildContext context,
+          AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+        if (snapshot.hasData) {
+          List<Map<String, dynamic>>? data = snapshot.data;
+          return listsWidget(data!, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  ListView listsWidget(List<Map<String, dynamic>> data, BuildContext context) {
     return ListView.builder(
-      itemCount: widget.departments.length,
+      itemCount: data.length,
       itemBuilder: (BuildContext context, index) {
         return ListTile(
             title: GestureDetector(
           onTap: () {
             AppConstants.nextScreen(
-                context, DepartmentScreen(data: widget.departments[index]));
-            print(widget.departments[index]);
+                context, DepartmentScreen(data: data[index]));
           },
           child: Text(
-            widget.departments[index]['name'],
+            data[index]["name"]!,
             style: TextStyle(
                 decoration: TextDecoration.underline,
                 decorationColor: AppConstants.primaryColor),
@@ -44,21 +60,22 @@ class _UpdatedTileBoxState extends State<UpdatedTileBox> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-            gradient: new LinearGradient(
-                stops: [0.04, 0.04],
+            gradient: LinearGradient(
+                stops: const [0.04, 0.04],
                 colors: [AppConstants.primaryColor, Colors.white]),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
             border: Border.all(color: AppConstants.primaryColor)),
         child: Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: ExpansionTile(
             title: Text(widget.text),
-            children: <Widget>[Container(height: 200, child: listsWidget())],
+            children: <Widget>[
+              SizedBox(height: 200, child: getDepartents(context))
+            ],
           ),
         ),
       ),

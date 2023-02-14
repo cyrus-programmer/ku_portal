@@ -215,7 +215,7 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
-                  AppConstants.nextScreenReplace(context, Login());
+                  AppConstants.nextScreenReplace(context, const Login());
                 },
                 child: const Text(
                   "Log Out",

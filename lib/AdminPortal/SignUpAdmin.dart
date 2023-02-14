@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:ku_portal/AdminControllers/LoginController.dart';
 import 'package:ku_portal/AdminPortal/LoginPageAd.dart';
-import 'package:ku_portal/StudentPortal/LoginPage.dart';
 import 'package:ku_portal/Widgets/AppBarImage.dart';
 import 'package:ku_portal/Widgets/LoginTypeText.dart';
 import 'package:ku_portal/Widgets/button.dart';
@@ -16,6 +16,14 @@ class SignUpAdmin extends StatefulWidget {
 }
 
 class _SignUpAdminState extends State<SignUpAdmin> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController iDController = TextEditingController();
+  TextEditingController seatController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -49,23 +57,60 @@ class _SignUpAdminState extends State<SignUpAdmin> {
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 48, right: 48, bottom: 37),
+          Padding(
+            padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
-                decoration: InputDecoration(
-              hintText: "Admin Name",
-            )),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 48, right: 48, bottom: 37),
-            child: TextField(
-                decoration: InputDecoration(
-              hintText: "Admin ID",
-            )),
+                controller: firstNameController,
+                decoration: const InputDecoration(
+                  hintText: "First Name",
+                )),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
+                controller: lastNameController,
+                decoration: const InputDecoration(
+                  hintText: "Last Name",
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                controller: phoneController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  hintText: "Phone Number",
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                controller: iDController,
+                decoration: const InputDecoration(
+                  hintText: "Admin ID",
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                controller: seatController,
+                decoration: const InputDecoration(
+                  hintText: "Seat Number",
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  hintText: "Email",
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                controller: passwordController,
                 obscureText: isPasswordHide,
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -98,13 +143,30 @@ class _SignUpAdminState extends State<SignUpAdmin> {
               ),
               GestureDetector(
                 onTap: () {
-                  AppConstants.nextScreenReplace(context, LognAdmin());
+                  var value = LoginController.addUser({
+                    "seat_number": seatController.text,
+                    "admin_id": iDController.text,
+                    "first_name": firstNameController.text,
+                    "last_name": lastNameController.text,
+                    "email": emailController.text,
+                    "phone": phoneController.text,
+                    "role": "admin",
+                    "password": passwordController.text
+                  });
+                  if (value == 200) {
+                    AppConstants.nextScreenReplace(context, const LognAdmin());
+                  }
                 },
-                child: Text(
-                  "Login Now",
-                  style: TextStyle(
-                      color: AppConstants.primaryColor,
-                      decoration: TextDecoration.underline),
+                child: GestureDetector(
+                  onTap: () {
+                    AppConstants.nextScreenReplace(context, LognAdmin());
+                  },
+                  child: Text(
+                    "Login Now",
+                    style: TextStyle(
+                        color: AppConstants.primaryColor,
+                        decoration: TextDecoration.underline),
+                  ),
                 ),
               )
             ],

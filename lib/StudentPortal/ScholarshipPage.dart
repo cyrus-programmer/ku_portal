@@ -25,7 +25,7 @@ class _ScholarshipPageState extends State<ScholarshipPage> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -35,7 +35,7 @@ class _ScholarshipPageState extends State<ScholarshipPage> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return ActivityCard(
-              activity: "Scholarship " + (index + 1).toString(),
+              activity: "Scholarship ${index + 1}",
               heading: data[index].name.toString(),
               subHeading: data[index].department.toString(),
               cost: data[index].charges.toString(),

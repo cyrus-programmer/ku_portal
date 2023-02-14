@@ -5,18 +5,13 @@ import 'package:ku_portal/AdminPortal/AdminFeedback.dart';
 import 'package:ku_portal/AdminPortal/AnnouncementPageAD.dart';
 import 'package:ku_portal/AdminPortal/DepartmentAD.dart';
 import 'package:ku_portal/AdminPortal/NavigatorBarAD.dart';
-import 'package:ku_portal/StudentPortal/NotificationPage.dart';
 
-import '../StudentPortal/ActivitiesPage.dart';
-import '../StudentPortal/DepartmentsPage.dart';
-import '../StudentPortal/FeedbackPage.dart';
-import '../StudentPortal/ScholarshipPage.dart';
 import '../Widgets/NewsCard.dart';
 import '../utils/AppConstants.dart';
 import 'AnnouncementPage.dart';
 
 class CMSPage extends StatefulWidget {
-  CMSPage({Key? key}) : super(key: key);
+  const CMSPage({Key? key}) : super(key: key);
 
   @override
   State<CMSPage> createState() => _CMSPageState();
@@ -68,7 +63,7 @@ class _CMSPageState extends State<CMSPage> {
               children: [
                 GestureDetector(
                   onTap: (() {
-                    AppConstants.nextScreen(context, AboutUs());
+                    AppConstants.nextScreen(context, const AboutUs());
                   }),
                   child: NewsCard(
                       heading: "About us",
@@ -77,7 +72,7 @@ class _CMSPageState extends State<CMSPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    AppConstants.nextScreen(context, DepartmentsAD());
+                    AppConstants.nextScreen(context, const DepartmentsAD());
                   },
                   child: NewsCard(
                       heading: "Departments",
@@ -91,7 +86,7 @@ class _CMSPageState extends State<CMSPage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    AppConstants.nextScreen(context, AnnouncementPageAD());
+                    AppConstants.nextScreen(context, const AnnouncementPageAD());
                   },
                   child: NewsCard(
                       heading: "News",
@@ -100,7 +95,7 @@ class _CMSPageState extends State<CMSPage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    AppConstants.nextScreen(context, FeedBackAD());
+                    AppConstants.nextScreen(context, const FeedBackAD());
                   },
                   child: NewsCard(
                       heading: "Feedback",
@@ -113,7 +108,7 @@ class _CMSPageState extends State<CMSPage> {
         )
       ])),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         height: 50,
         width: 50,
         child: Material(
@@ -127,7 +122,7 @@ class _CMSPageState extends State<CMSPage> {
             child: InkWell(
               borderRadius: BorderRadius.circular(500.0),
               onTap: () {
-                AppConstants.nextScreen(context, AddAnnouncement());
+                AppConstants.nextScreen(context, const AddAnnouncement());
               },
               child: Icon(
                 Icons.add,

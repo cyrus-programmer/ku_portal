@@ -15,7 +15,7 @@ class Message {
         ),
         messageText: Text(
           message,
-          style: TextStyle(fontSize: 14, color: Colors.white),
+          style: const TextStyle(fontSize: 14, color: Colors.white),
         ));
   }
 }

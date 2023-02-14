@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:ku_portal/StudentPortal/ActivitiesPage.dart';
 import 'package:ku_portal/StudentPortal/DepartmentsPage.dart';
 import 'package:ku_portal/StudentPortal/FeedbackPage.dart';
@@ -8,11 +7,6 @@ import 'package:ku_portal/StudentPortal/NavigatorBar.dart';
 import 'package:ku_portal/StudentPortal/ScholarshipPage.dart';
 import 'package:ku_portal/Widgets/NewsCard.dart';
 
-import '../AdminControllers/ActivityController.dart';
-import '../AdminControllers/ScholarController.dart';
-import '../Models/ActivityModel.dart';
-import '../Models/ScholarshipModel.dart';
-import '../Widgets/ActivityCard.dart';
 import '../utils/AppConstants.dart';
 
 class NewsPage extends StatefulWidget {
@@ -70,7 +64,7 @@ class _NewsPageState extends State<NewsPage> {
                   children: [
                     GestureDetector(
                       onTap: (() {
-                        AppConstants.nextScreen(context, ActivitiesPage());
+                        AppConstants.nextScreen(context, const ActivitiesPage());
                       }),
                       child: NewsCard(
                           heading: "Activities",
@@ -79,7 +73,7 @@ class _NewsPageState extends State<NewsPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        AppConstants.nextScreen(context, DepartmentsPage());
+                        AppConstants.nextScreen(context, const DepartmentsPage());
                       },
                       child: NewsCard(
                           heading: "Departments",
@@ -93,7 +87,7 @@ class _NewsPageState extends State<NewsPage> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        AppConstants.nextScreen(context, ScholarshipPage());
+                        AppConstants.nextScreen(context, const ScholarshipPage());
                       },
                       child: NewsCard(
                           heading: "Scholarships",
@@ -102,7 +96,7 @@ class _NewsPageState extends State<NewsPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        AppConstants.nextScreen(context, FeedbackPage());
+                        AppConstants.nextScreen(context, const FeedbackPage());
                       },
                       child: NewsCard(
                           heading: "Feedback",

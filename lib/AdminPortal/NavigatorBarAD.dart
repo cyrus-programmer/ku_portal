@@ -4,18 +4,12 @@ import 'package:ku_portal/AdminPortal/AdminDashboard.dart';
 import 'package:ku_portal/AdminPortal/AnnouncementPageAD.dart';
 import 'package:ku_portal/AdminPortal/CMSPage.dart';
 import 'package:ku_portal/AdminPortal/SettingAD.dart';
-import 'package:ku_portal/StudentPortal/NotificationPage.dart';
-import 'package:ku_portal/StudentPortal/SettingPage.dart';
-import 'package:ku_portal/StudentPortal/StudentDashBoard.dart';
-import 'package:ku_portal/StudentPortal/StudentProfile.dart';
-
-import '../StudentPortal/NewsPage.dart';
 import '../utils/AppConstants.dart';
 
 // ignore: must_be_immutable
 class NavigatorBarAD extends StatelessWidget {
   String page;
-  NavigatorBarAD({required this.page});
+  NavigatorBarAD({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +28,7 @@ class NavigatorBarAD extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppConstants.primaryColor,
                     onTap: () {
-                      AppConstants.nextScreenReplace(context, AdminDashboard());
+                      AppConstants.nextScreenReplace(context, const AdminDashboard());
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +61,7 @@ class NavigatorBarAD extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppConstants.primaryColor,
                     onTap: () {
-                      AppConstants.nextScreen(context, CMSPage());
+                      AppConstants.nextScreen(context, const CMSPage());
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +95,7 @@ class NavigatorBarAD extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppConstants.primaryColor,
                     onTap: () {
-                      AppConstants.nextScreen(context, AnnouncementPageAD());
+                      AppConstants.nextScreen(context, const AnnouncementPageAD());
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +129,7 @@ class NavigatorBarAD extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppConstants.primaryColor,
                     onTap: () {
-                      AppConstants.nextScreen(context, SettingAD());
+                      AppConstants.nextScreen(context, const SettingAD());
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

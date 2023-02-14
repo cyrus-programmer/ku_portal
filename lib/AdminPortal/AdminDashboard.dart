@@ -12,7 +12,7 @@ import '../Models/ActivityModel.dart';
 import '../utils/AppConstants.dart';
 
 class AdminDashboard extends StatefulWidget {
-  AdminDashboard({Key? key}) : super(key: key);
+  const AdminDashboard({Key? key}) : super(key: key);
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
@@ -30,7 +30,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -65,7 +65,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -233,7 +233,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         ],
       )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         height: 50,
         width: 50,
         child: Material(
@@ -247,7 +247,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
             child: InkWell(
               borderRadius: BorderRadius.circular(500.0),
               onTap: () {
-                AppConstants.nextScreen(context, AddAnnouncement());
+                AppConstants.nextScreen(context, const AddAnnouncement());
               },
               child: Icon(
                 Icons.add,

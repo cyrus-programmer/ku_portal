@@ -5,20 +5,17 @@ import 'package:ku_portal/Widgets/TextFieldAdminWigt.dart';
 import 'package:ku_portal/Widgets/button.dart';
 
 import '../AdminControllers/ScholarController.dart';
-import '../Widgets/ActivityCard.dart';
 import '../utils/AppConstants.dart';
 
-List<String> list = ["Add to", "Scholarships", "Activities"];
 
 class AddAnnouncement extends StatefulWidget {
-  AddAnnouncement({Key? key}) : super(key: key);
+  const AddAnnouncement({Key? key}) : super(key: key);
 
   @override
   State<AddAnnouncement> createState() => _AddAnnouncementState();
 }
 
 class _AddAnnouncementState extends State<AddAnnouncement> {
-  var dropdownValue = list.first;
   bool isScholar = true;
   bool isActivity = false;
   TextEditingController nameController = TextEditingController();
@@ -118,30 +115,30 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Text(
                             "Scholarship Details",
                             style: TextStyle(
                                 color: AppConstants.primaryColor, fontSize: 24),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: nameController,
                               text: "Scholarship Name"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: deptController,
                               text: "Department Name"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: semController, text: "Semester"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: chargesController, text: "Charges"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: urlController, text: "Post URL"),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           GestureDetector(
                             onTap: (() {
                               ScholarController.addScholarship({
@@ -169,30 +166,30 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                         // crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Text(
                             "Activity Details",
                             style: TextStyle(
                                 color: AppConstants.primaryColor, fontSize: 24),
                           ),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: nameController,
                               text: "Activity Name"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: deptController,
                               text: "Department Name"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: semController, text: "Timing"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: chargesController, text: "Charges"),
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: urlController, text: "Post URL"),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           GestureDetector(
                             onTap: (() {
                               ActivityController.addScholarship({

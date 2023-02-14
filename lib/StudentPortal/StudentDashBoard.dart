@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/Auth.dart';
 import 'package:ku_portal/StudentPortal/NavigatorBar.dart';
-import 'package:ku_portal/StudentPortal/NewsPage.dart';
 import 'package:ku_portal/StudentPortal/NotificationPage.dart';
 import 'package:ku_portal/Widgets/CarouselContainer.dart';
 import 'package:ku_portal/Widgets/UpdatedCarouselItem.dart';
@@ -14,7 +14,7 @@ import '../Models/ScholarshipModel.dart';
 import '../utils/AppConstants.dart';
 
 class StdDashBoard extends StatefulWidget {
-  StdDashBoard({Key? key}) : super(key: key);
+  const StdDashBoard({Key? key}) : super(key: key);
 
   @override
   State<StdDashBoard> createState() => _StdDashBoardState();
@@ -32,7 +32,7 @@ class _StdDashBoardState extends State<StdDashBoard> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -67,7 +67,7 @@ class _StdDashBoardState extends State<StdDashBoard> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -90,6 +90,8 @@ class _StdDashBoardState extends State<StdDashBoard> {
           );
         });
   }
+
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +131,7 @@ class _StdDashBoardState extends State<StdDashBoard> {
                         IconButton(
                             onPressed: () {
                               AppConstants.nextScreen(
-                                  context, NotificationPage());
+                                  context, const NotificationPage());
                             },
                             // ignore: prefer_const_constructors
                             icon: FaIcon(
@@ -148,8 +150,11 @@ class _StdDashBoardState extends State<StdDashBoard> {
                   ),
                   const SizedBox(height: 10),
                   TextField(
+                      controller: searchController,
+                      maxLength: 300,
                       decoration: InputDecoration(
-                          isDense: true, // Added this
+                          isDense: false,
+                          // Added this
                           contentPadding: const EdgeInsets.all(8),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -158,8 +163,11 @@ class _StdDashBoardState extends State<StdDashBoard> {
                           hintText: "Search Info",
                           fillColor: Colors.white,
                           filled: true,
-                          prefixIcon: Icon(
-                            Icons.search,
+                          prefixIcon: IconButton(
+                            onPressed: (() {
+                              searchController.text = AuthData.token!;
+                            }),
+                            icon: const Icon(Icons.search),
                             color: AppConstants.primaryColor,
                           ),
                           suffixIcon: Icon(

@@ -34,7 +34,7 @@ class _NotificationPageState extends State<NotificationPage> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -50,7 +50,7 @@ class _NotificationPageState extends State<NotificationPage> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -60,7 +60,7 @@ class _NotificationPageState extends State<NotificationPage> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return ActivityCard(
-              activity: "Activity " + (index + 1).toString(),
+              activity: "Activity ${index + 1}",
               heading: data[index].name,
               subHeading: data[index].dept,
               cost: data[index].charges.toString(),
@@ -74,7 +74,7 @@ class _NotificationPageState extends State<NotificationPage> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return ActivityCard(
-              activity: "Scholarship " + (index + 1).toString(),
+              activity: "Scholarship ${index + 1}",
               heading: data[index].name.toString(),
               subHeading: data[index].department.toString(),
               cost: data[index].charges.toString(),
@@ -122,7 +122,7 @@ class _NotificationPageState extends State<NotificationPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

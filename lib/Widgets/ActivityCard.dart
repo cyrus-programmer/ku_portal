@@ -41,7 +41,7 @@ class _ActivityCardState extends State<ActivityCard> {
     var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 10),
-      child: Container(
+      child: SizedBox(
         height: size.height / 4,
         width: double.maxFinite,
         child: Column(
@@ -82,13 +82,13 @@ class _ActivityCardState extends State<ActivityCard> {
                             children: [
                               Text(
                                 widget.heading,
-                                style: TextStyle(fontSize: 16),
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
                           Text(
                             widget.subHeading,
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                            style: const TextStyle(color: Colors.grey, fontSize: 12),
                           ),
                           Expanded(child: Container()),
                           Row(
@@ -104,7 +104,7 @@ class _ActivityCardState extends State<ActivityCard> {
                                 padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                   widget.timing,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.grey, fontSize: 14),
                                 ),
                               )
@@ -130,7 +130,7 @@ class _ActivityCardState extends State<ActivityCard> {
                                     padding: const EdgeInsets.only(left: 5),
                                     child: Text(
                                       widget.cost,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.grey, fontSize: 14),
                                     ),
                                   )

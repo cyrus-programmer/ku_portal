@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../StudentPortal/NotificationPage.dart';
 import '../Widgets/button.dart';
 import '../utils/AppConstants.dart';
 

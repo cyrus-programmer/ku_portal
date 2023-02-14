@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ku_portal/Widgets/ActivityCard.dart';
-import 'package:ku_portal/Widgets/button.dart';
 import 'package:ku_portal/utils/AppConstants.dart';
 
 import '../AdminControllers/ActivityController.dart';
@@ -26,7 +25,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
@@ -36,7 +35,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return ActivityCard(
-              activity: "Activity " + (index + 1).toString(),
+              activity: "Activity ${index + 1}",
               heading: data[index].name,
               subHeading: data[index].dept,
               cost: data[index].charges.toString(),

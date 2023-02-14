@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ku_portal/Widgets/InfoTile.dart';
-import 'package:ku_portal/Widgets/TileBox.dart';
 import 'package:ku_portal/Widgets/UpdatedTileBox.dart';
 
-import '../Widgets/AppBarImage.dart';
+import '../AdminControllers/DepartmentController.dart';
 import '../utils/AppConstants.dart';
 
 class DepartmentsPage extends StatefulWidget {
@@ -15,11 +13,35 @@ class DepartmentsPage extends StatefulWidget {
 }
 
 class _DepartmentsPageState extends State<DepartmentsPage> {
-  List ubitDepartments = [
-    "Department of Computer Science",
-    "Food and Science Technology Department",
-    "Applied Physics Department"
-  ];
+  FutureBuilder getScholarship(BuildContext context) {
+    return FutureBuilder<List>(
+      future: DepartmentController.getDepartments(),
+      builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          List? data = snapshot.data;
+          return cards(data, context);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
+  ListView cards(data, BuildContext context) {
+    return ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: UpdatedTileBox(
+              departments: (data[index]['child']),
+              text: data[index]['name'],
+              width: double.maxFinite,
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -31,7 +53,7 @@ class _DepartmentsPageState extends State<DepartmentsPage> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/ubit.jpg'),
+                image: const AssetImage('assets/ubit.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.5), BlendMode.darken)),
@@ -54,9 +76,9 @@ class _DepartmentsPageState extends State<DepartmentsPage> {
                   size: 25,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text(
+              const Padding(
+                padding: EdgeInsets.only(left: 8.0),
+                child: Text(
                   "Departments",
                   style: TextStyle(color: Colors.white, fontSize: 24),
                 ),
@@ -72,14 +94,14 @@ class _DepartmentsPageState extends State<DepartmentsPage> {
                             borderSide:
                                 BorderSide(color: AppConstants.primaryColor)),
                         hintText: "Search department",
-                        hintStyle: TextStyle(color: Colors.grey),
+                        hintStyle: const TextStyle(color: Colors.grey),
                         fillColor: Colors.white,
                         filled: true,
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.search,
                           color: Colors.grey,
                         ),
-                        suffixIcon: Icon(
+                        suffixIcon: const Icon(
                           Icons.filter_list_outlined,
                           color: Colors.grey,
                         ))),
@@ -88,12 +110,8 @@ class _DepartmentsPageState extends State<DepartmentsPage> {
           ),
         ),
       ),
-      SizedBox(height: 10),
-      UpdatedTileBox(
-        text: "Science Department",
-        width: double.maxFinite,
-        departments: ubitDepartments,
-      )
+      const SizedBox(height: 10),
+      SizedBox(height: size.height / 1.8, child: getScholarship(context)),
     ])));
   }
 }

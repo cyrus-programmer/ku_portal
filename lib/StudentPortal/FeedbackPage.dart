@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ku_portal/AdminControllers/FeedbackController.dart';
 import 'package:ku_portal/Widgets/button.dart';
 
 import '../utils/AppConstants.dart';
@@ -12,6 +13,8 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
+  TextEditingController subjectController = TextEditingController();
+  TextEditingController messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -50,29 +53,31 @@ class _FeedbackPageState extends State<FeedbackPage> {
           ),
         ),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Padding(
         padding: const EdgeInsets.all(12.0),
         child: TextField(
+          controller: subjectController,
           decoration: InputDecoration(
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: const TextStyle(color: Colors.grey),
               hintText: "Add Subject",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey))),
+                  borderSide: const BorderSide(color: Colors.grey))),
           maxLines: 3,
         ),
       ),
-      SizedBox(height: 30),
+      const SizedBox(height: 30),
       Padding(
         padding: const EdgeInsets.all(12.0),
         child: TextField(
+          controller: messageController,
           decoration: InputDecoration(
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: const TextStyle(color: Colors.grey),
               hintText: "Add feedback",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey))),
+                  borderSide: const BorderSide(color: Colors.grey))),
           maxLines: 10,
         ),
       ),
@@ -81,10 +86,18 @@ class _FeedbackPageState extends State<FeedbackPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ButtonWidget(
-                backgroundColor: AppConstants.primaryColor,
-                text: "Post",
-                textColor: Colors.white)
+            GestureDetector(
+              onTap: () {
+                FeedbackController.addFeedback({
+                  "subject": subjectController.text,
+                  "message": messageController.text,
+                });
+              },
+              child: ButtonWidget(
+                  backgroundColor: AppConstants.primaryColor,
+                  text: "Post",
+                  textColor: Colors.white),
+            )
           ],
         ),
       ),

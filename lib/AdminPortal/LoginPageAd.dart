@@ -8,17 +8,18 @@ import '../Widgets/AppBarImage.dart';
 import '../Widgets/LoginTypeText.dart';
 import '../Widgets/button.dart';
 import '../utils/AppConstants.dart';
+import 'AdminDashboard.dart';
 
 class LognAdmin extends StatefulWidget {
-  LognAdmin({Key? key}) : super(key: key);
+  const LognAdmin({Key? key}) : super(key: key);
 
   @override
   State<LognAdmin> createState() => _LognAdminState();
 }
 
 class _LognAdminState extends State<LognAdmin> {
-  TextEditingController _password = TextEditingController();
-  TextEditingController _email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController();
   bool isPasswordHide = true;
   void toggleChange() {
     setState(() {
@@ -63,8 +64,8 @@ class _LognAdminState extends State<LognAdmin> {
             padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
               keyboardType: TextInputType.text,
-              controller: _email,
-              decoration: InputDecoration(
+              controller: email,
+              decoration: const InputDecoration(
                 hintText: "Admin ID",
               ),
             ),
@@ -73,7 +74,7 @@ class _LognAdminState extends State<LognAdmin> {
             padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
               keyboardType: TextInputType.text,
-              controller: _password,
+              controller: password,
               decoration: InputDecoration(
                   hintText: "Password",
                   suffixIcon: GestureDetector(
@@ -86,8 +87,12 @@ class _LognAdminState extends State<LognAdmin> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              LoginController.loginVerify(_email.text, _password.text, context);
+            onTap: () async {
+              var value =
+                  await LoginController.loginVerify(email.text, password.text);
+              if (value == 200) {
+                AppConstants.nextScreenReplace(context, AdminDashboard());
+              }
             },
             child: ButtonWidget(
                 backgroundColor: AppConstants.primaryColor,

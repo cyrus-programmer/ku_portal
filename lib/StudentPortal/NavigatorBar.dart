@@ -8,7 +8,7 @@ import 'NewsPage.dart';
 
 class NavigatorBottomAppBar extends StatelessWidget {
   String page;
-  NavigatorBottomAppBar({required this.page});
+  NavigatorBottomAppBar({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class NavigatorBottomAppBar extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppConstants.primaryColor,
                     onTap: () {
-                      AppConstants.nextScreen(context, NewsPage());
+                      AppConstants.nextScreen(context, const NewsPage());
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +93,7 @@ class NavigatorBottomAppBar extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppConstants.primaryColor,
                     onTap: () {
-                      AppConstants.nextScreen(context, SettingPage());
+                      AppConstants.nextScreen(context, const SettingPage());
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +127,7 @@ class NavigatorBottomAppBar extends StatelessWidget {
                   child: InkWell(
                     splashColor: AppConstants.primaryColor,
                     onTap: () {
-                      AppConstants.nextScreen(context, StudentProfile());
+                      AppConstants.nextScreen(context, const StudentProfile());
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

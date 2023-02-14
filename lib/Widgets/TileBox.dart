@@ -15,7 +15,6 @@ class TileBox extends StatefulWidget {
 class _TileBoxState extends State<TileBox> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: AppConstants.primaryColor),

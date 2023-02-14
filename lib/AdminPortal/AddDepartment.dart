@@ -1,15 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ku_portal/AdminControllers/DepartmentController.dart';
+import 'package:ku_portal/Models/DepartmentModel.dart';
 import 'package:ku_portal/Widgets/TextFieldAdminWigt.dart';
 import 'package:ku_portal/Widgets/button.dart';
-
+import 'package:http/http.dart' as http;
 import '../utils/AppConstants.dart';
 
 class AddDepartment extends StatefulWidget {
@@ -21,6 +19,9 @@ class AddDepartment extends StatefulWidget {
 
 class _AddDepartmentState extends State<AddDepartment> {
   String filePath = ' ';
+  String fileName = ' ';
+  String imageUrl = ' ';
+
   String? value1;
   String? prtId;
   List data = [];
@@ -39,21 +40,29 @@ class _AddDepartmentState extends State<AddDepartment> {
   String? imageBuffer;
   loadFile() async {
     XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    var bytes = await XFile(file!.path).readAsBytes();
+    var link = await uploadImage(
+        file!.path, "http://${AppConstants.ipAddress}:8081/api/upload");
     setState(() {
+      imageUrl = link;
+      fileName = file.name;
       filePath = file.path;
-      imageBuffer = bytes.toString();
     });
+  }
 
-    // User canceled the picker
+  Future<String> uploadImage(filename, url) async {
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+
+    request.files.add(await http.MultipartFile.fromPath("file", filename));
+
+    var res = await request.send();
+
+    return await res.stream.bytesToString();
   }
 
   Future<void> loadData() async {
     var d = await DepartmentController.getParents();
     var n = [];
     for (var element in d) {
-      print(element['name']);
       n.add(element['name']);
     }
     setState(() {
@@ -135,7 +144,7 @@ class _AddDepartmentState extends State<AddDepartment> {
             DropdownButton(
                 value: value1,
                 isExpanded: true,
-                hint: Text("Select Department Category"),
+                hint: const Text("Select Department Category"),
                 items: data.map((name) {
                   return DropdownMenuItem(
                     value: name,
@@ -169,12 +178,12 @@ class _AddDepartmentState extends State<AddDepartment> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                        child: SingleChildScrollView(child: Text(filePath))),
+                        child: SingleChildScrollView(child: Text(fileName))),
                     IconButton(
                         onPressed: (() {
                           loadFile();
                         }),
-                        icon: Icon(Icons.add_a_photo))
+                        icon: const Icon(Icons.add_a_photo))
                   ],
                 ),
               ),
@@ -209,7 +218,7 @@ class _AddDepartmentState extends State<AddDepartment> {
                   "description": descController.text,
                   "chairman_name": chairManController.text,
                   "abbreviation": nameController.text,
-                  "image": "imageBuffer",
+                  "image": imageUrl,
                   "parent": prtId,
                   "programs": programs.toString()
                 });

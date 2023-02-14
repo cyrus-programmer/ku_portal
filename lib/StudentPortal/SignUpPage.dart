@@ -7,6 +7,8 @@ import 'package:ku_portal/Widgets/LoginTypeText.dart';
 import 'package:ku_portal/Widgets/button.dart';
 import 'package:ku_portal/utils/AppConstants.dart';
 
+import '../AdminControllers/LoginController.dart';
+
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
@@ -15,6 +17,14 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController iDController = TextEditingController();
+  TextEditingController seatController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -49,23 +59,52 @@ class _SignUpState extends State<SignUp> {
               ),
             ],
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
+                controller: firstNameController,
                 decoration: InputDecoration(
-              hintText: "Student Name",
-            )),
+                  hintText: "First Name",
+                )),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
+                controller: lastNameController,
                 decoration: InputDecoration(
-              hintText: "Student ID",
-            )),
+                  hintText: "Last Name",
+                )),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                controller: seatController,
+                decoration: InputDecoration(
+                  hintText: "Student ID",
+                )),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                controller: emailController,
+                decoration: InputDecoration(
+                  hintText: "Email",
+                )),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 48, right: 48, bottom: 37),
+            child: TextField(
+                keyboardType: TextInputType.phone,
+                controller: firstNameController,
+                decoration: InputDecoration(
+                  hintText: "Phone Number",
+                )),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 48, right: 48, bottom: 37),
             child: TextField(
+                controller: passwordController,
                 obscureText: isPasswordHide,
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -83,6 +122,20 @@ class _SignUpState extends State<SignUp> {
                 )),
           ),
           GestureDetector(
+            onTap: (() {
+              var value = LoginController.addUser({
+                "seat_number": seatController.text,
+                "first_name": firstNameController.text,
+                "last_name": lastNameController.text,
+                "email": emailController.text,
+                "phone": phoneController.text,
+                "role": "student",
+                "password": passwordController.text
+              });
+              if (value == 200) {
+                AppConstants.nextScreenReplace(context, const Login());
+              }
+            }),
             child: ButtonWidget(
                 backgroundColor: AppConstants.primaryColor,
                 text: "SignUp",
