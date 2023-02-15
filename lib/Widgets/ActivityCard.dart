@@ -11,6 +11,7 @@ class ActivityCard extends StatefulWidget {
   String timing;
   String cost;
   String url;
+  bool chk;
 
   ActivityCard(
       {Key? key,
@@ -19,6 +20,7 @@ class ActivityCard extends StatefulWidget {
       required this.subHeading,
       required this.cost,
       required this.timing,
+      this.chk = false,
       required this.url})
       : super(key: key);
 
@@ -88,7 +90,8 @@ class _ActivityCardState extends State<ActivityCard> {
                           ),
                           Text(
                             widget.subHeading,
-                            style: const TextStyle(color: Colors.grey, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.grey, fontSize: 12),
                           ),
                           Expanded(child: Container()),
                           Row(
@@ -152,13 +155,15 @@ class _ActivityCardState extends State<ActivityCard> {
                       ),
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.delete_outline_outlined,
-                        size: 40,
-                        color: AppConstants.primaryColor,
-                      ))
+                  !widget.chk
+                      ? IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.delete_outline_outlined,
+                            size: 40,
+                            color: AppConstants.primaryColor,
+                          ))
+                      : Container()
                 ],
               ),
             )

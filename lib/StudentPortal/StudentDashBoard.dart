@@ -95,7 +95,7 @@ class _StdDashBoardState extends State<StdDashBoard> {
             color: AppConstants.primaryColor,
             heading: data[index].name,
             imagePath: "assets/ku.png",
-            page: false,
+            page: true,
             subHeading: "Batch-${index + 1}",
           );
         });

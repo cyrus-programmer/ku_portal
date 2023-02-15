@@ -4,9 +4,9 @@ import 'package:ku_portal/AdminControllers/ActivityController.dart';
 import 'package:ku_portal/Widgets/TextFieldAdminWigt.dart';
 import 'package:ku_portal/Widgets/button.dart';
 
+import '../AdminControllers/DepartmentController.dart';
 import '../AdminControllers/ScholarController.dart';
 import '../utils/AppConstants.dart';
-
 
 class AddAnnouncement extends StatefulWidget {
   const AddAnnouncement({Key? key}) : super(key: key);
@@ -18,6 +18,11 @@ class AddAnnouncement extends StatefulWidget {
 class _AddAnnouncementState extends State<AddAnnouncement> {
   bool isScholar = true;
   bool isActivity = false;
+  String? value1;
+  List data = [];
+  List? bigData;
+  String? prtId;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController deptController = TextEditingController();
   TextEditingController chargesController = TextEditingController();
@@ -28,6 +33,24 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
       isScholar = !isScholar;
       isActivity = !isActivity;
     });
+  }
+
+  Future<void> loadData() async {
+    var d = await DepartmentController.getChildDepartments();
+    var n = [];
+    for (var element in d) {
+      n.add(element['name']);
+    }
+    setState(() {
+      data = n;
+      bigData = d;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
   }
 
   @override
@@ -126,9 +149,26 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                               controller: nameController,
                               text: "Scholarship Name"),
                           const SizedBox(height: 15),
-                          TextFieldAdminWigt(
-                              controller: deptController,
-                              text: "Department Name"),
+                          DropdownButton(
+                              value: value1,
+                              isExpanded: true,
+                              hint: const Text("Select Department Category"),
+                              items: data.map((name) {
+                                return DropdownMenuItem(
+                                  value: name,
+                                  child: Text(name),
+                                );
+                              }).toList(),
+                              onChanged: ((value) {
+                                setState(() {
+                                  value1 = value.toString();
+                                  for (var element in bigData!) {
+                                    if (element['name'] == value1) {
+                                      prtId = element['_id'];
+                                    }
+                                  }
+                                });
+                              })),
                           const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: semController, text: "Semester"),
@@ -143,8 +183,8 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                             onTap: (() {
                               ScholarController.addScholarship({
                                 "name": nameController.text,
-                                "department": "63d4d39626404f95376b08e0",
-                                "charges": int.parse(chargesController.text),
+                                "department": prtId,
+                                "charges": chargesController.text,
                                 "semester": semController.text,
                                 "url": urlController.text
                               });
@@ -177,9 +217,26 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                               controller: nameController,
                               text: "Activity Name"),
                           const SizedBox(height: 15),
-                          TextFieldAdminWigt(
-                              controller: deptController,
-                              text: "Department Name"),
+                          DropdownButton(
+                              value: value1,
+                              isExpanded: true,
+                              hint: const Text("Select Department Category"),
+                              items: data.map((name) {
+                                return DropdownMenuItem(
+                                  value: name,
+                                  child: Text(name),
+                                );
+                              }).toList(),
+                              onChanged: ((value) {
+                                setState(() {
+                                  value1 = value.toString();
+                                  for (var element in bigData!) {
+                                    if (element['name'] == value1) {
+                                      prtId = element['_id'];
+                                    }
+                                  }
+                                });
+                              })),
                           const SizedBox(height: 15),
                           TextFieldAdminWigt(
                               controller: semController, text: "Timing"),
@@ -194,8 +251,8 @@ class _AddAnnouncementState extends State<AddAnnouncement> {
                             onTap: (() {
                               ActivityController.addScholarship({
                                 "name": nameController.text,
-                                "department": "63d4d39626404f95376b08e0",
-                                "charges": int.parse(chargesController.text),
+                                "department": prtId,
+                                "charges": chargesController.text,
                                 "timing": semController.text,
                                 "url": urlController.text
                               });

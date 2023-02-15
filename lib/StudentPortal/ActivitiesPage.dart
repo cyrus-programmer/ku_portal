@@ -40,6 +40,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
               subHeading: data[index].dept,
               cost: data[index].charges.toString(),
               timing: data[index].sem,
+              chk: true,
               url: data[index].url);
         });
   }

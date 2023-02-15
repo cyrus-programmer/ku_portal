@@ -40,6 +40,7 @@ class _ScholarshipPageState extends State<ScholarshipPage> {
               subHeading: data[index].department.toString(),
               cost: data[index].charges.toString(),
               timing: data[index].semester.toString(),
+              chk: true,
               url: data[index].url);
         });
   }
