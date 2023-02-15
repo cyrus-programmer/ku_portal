@@ -5,6 +5,7 @@ import 'package:ku_portal/Models/ScholarshipModel.dart';
 
 import '../Auth.dart';
 import '../utils/AppConstants.dart';
+import 'DepartmentController.dart';
 
 class ScholarController {
   static Future addScholarship(Map<String, dynamic> body) async {
@@ -32,6 +33,10 @@ class ScholarController {
         Uri.parse("http://${AppConstants.ipAddress}:8081/api/scholarships"),
         headers: headers);
     var data = json.decode(response.body);
+    for (var activity in data) {
+      var dept = await DepartmentController.getDepart(activity['department']);
+      activity['department'] = dept['name'];
+    }
     List<ScholarshipModel> activities = await data
         .map<ScholarshipModel>((json) => ScholarshipModel.fromJson(json))
         .toList();

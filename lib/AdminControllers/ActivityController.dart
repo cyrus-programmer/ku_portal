@@ -31,7 +31,6 @@ class ActivityController {
       var dept = await DepartmentController.getDepart(activity['department']);
       activity['department'] = dept['name'];
     }
-    print(data);
     List<ActivityModel> activities = await data
         .map<ActivityModel>((json) => ActivityModel.fromJson(json))
         .toList();
