@@ -110,6 +110,24 @@ class DepartmentController {
     return dpts;
   }
 
+  static Future<Map<String, dynamic>> getDepart(String ids) async {
+    var headers = {
+      "authorization": "Bearer ${AuthData.token}",
+      "Accept": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    };
+
+    var response = await http.get(
+        Uri.parse("http://${AppConstants.ipAddress}:8081/api/categories/$ids"),
+        headers: headers);
+    var data = json.decode(response.body);
+    print(data);
+    var dpts = data['result'][0];
+    // print(data['result'][0]);
+
+    return dpts;
+  }
+
   static Future<List> getChildDepartments() async {
     var headers = {
       "authorization": "Bearer ${AuthData.token}",

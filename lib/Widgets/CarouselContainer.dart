@@ -19,7 +19,8 @@ class _CarouselItemState extends State<CarouselItem> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-                image: NetworkImage(widget.imagePath), fit: BoxFit.fill)),
+                image: NetworkImage(widget.imagePath.replaceAll('"', '')),
+                fit: BoxFit.fill)),
         child: Padding(
           padding: const EdgeInsets.only(left: 10, bottom: 5),
           child: Column(

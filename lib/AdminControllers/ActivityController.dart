@@ -1,6 +1,6 @@
-
 import 'dart:convert' show json;
 import 'package:http/http.dart' as http;
+import 'package:ku_portal/AdminControllers/DepartmentController.dart';
 import 'package:ku_portal/Auth.dart';
 import 'package:ku_portal/Models/ActivityModel.dart';
 import 'package:ku_portal/utils/AppConstants.dart';
@@ -26,6 +26,12 @@ class ActivityController {
         Uri.parse("http://${AppConstants.ipAddress}:8081/api/activities"),
         headers: headers);
     var data = json.decode(response.body);
+    for (var activity in data) {
+      print(activity);
+      var dept = await DepartmentController.getDepart(activity['department']);
+      activity['department'] = dept['name'];
+    }
+    print(data);
     List<ActivityModel> activities = await data
         .map<ActivityModel>((json) => ActivityModel.fromJson(json))
         .toList();

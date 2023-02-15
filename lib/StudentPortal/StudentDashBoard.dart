@@ -30,7 +30,11 @@ class _StdDashBoardState extends State<StdDashBoard> {
           (BuildContext context, AsyncSnapshot<List<ActivityModel>> snapshot) {
         if (snapshot.hasData) {
           List<ActivityModel>? data = snapshot.data;
-          return cards(data, context);
+          if (data!.length > 0) {
+            return cards(data, context);
+          } else {
+            return Text("No Activities are available");
+          }
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
@@ -65,7 +69,11 @@ class _StdDashBoardState extends State<StdDashBoard> {
           AsyncSnapshot<List<ScholarshipModel>> snapshot) {
         if (snapshot.hasData) {
           List<ScholarshipModel>? data = snapshot.data;
-          return cards1(data, context);
+          if (data!.length > 0) {
+            return cards1(data, context);
+          } else {
+            return Text("No Scholarships are available");
+          }
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
