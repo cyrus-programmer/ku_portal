@@ -27,7 +27,6 @@ class ActivityController {
         headers: headers);
     var data = json.decode(response.body);
     for (var activity in data) {
-      print(activity);
       var dept = await DepartmentController.getDepart(activity['department']);
       activity['department'] = dept['name'];
     }
